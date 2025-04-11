@@ -1,0 +1,18 @@
+[
+    {
+      "question": "What is 5 + 3?",
+      "correctAnswer": "8",
+      "wrongAnswers": ["6", "7", "9"]
+    },
+    {
+      "question": "What color is the sky?",
+      "correctAnswer": "blue",
+      "wrongAnswers": ["green", "red", "purple"]
+    },
+    {
+      "question": "What is 2 + 2?",
+      "correctAnswer": "4",
+      "wrongAnswers": ["3", "5", "6"]
+    }
+  ]
+  
