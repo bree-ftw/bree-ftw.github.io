@@ -1,12 +1,6 @@
-import Phaser from 'phaser';
-
-export default class RhythmGameScene extends Phaser.Scene {
+class RhythmGameScene extends Phaser.Scene {
   constructor() {
     super({ key: 'RhythmGameScene' });
-  }
-
-  init(data) {
-    this.onComplete = data.onComplete;
   }
 
   preload() {
@@ -14,57 +8,42 @@ export default class RhythmGameScene extends Phaser.Scene {
   }
 
   create() {
-    this.score = 0;
+    const data = this.cache.json.get('rhythms');
     this.notes = [];
-    this.isPlaying = true;
+    this.columns = { A: 100, S: 200, D: 300, F: 400 };
+    this.score = 0;
 
-    const rhythmData = this.cache.json.get('rhythms').rhythms;
+    this.add.line(0, 0, 50, 600, 500, 600, 0xffffff, 0.5).setLineWidth(2, 2);
 
-    this.columns = {
-      A: 100,
-      S: 200,
-      D: 300,
-      F: 400
-    };
-
-    // Draw hit line
-    this.hitLineY = 600;
-    this.add.line(0, 0, 50, this.hitLineY, 500, this.hitLineY, 0xffffff, 0.5)
-      .setLineWidth(2, 2);
-
-    rhythmData.forEach(data => {
-      const x = this.columns[data.note];
+    data.rhythms.forEach(noteData => {
+      const x = this.columns[noteData.note];
       const note = this.add.rectangle(x, 0, 40, 40, 0x88ccff);
-      note.noteType = data.note;
+      note.noteType = noteData.note;
 
       this.tweens.add({
         targets: note,
-        y: this.hitLineY,
+        y: 600,
         duration: 2000,
-        delay: data.time,
+        delay: noteData.time,
         ease: 'Linear',
         onComplete: () => {
-          if (note.active) {
-            note.destroy(); // missed note
-          }
+          if (note.active) note.destroy();
         }
       });
 
       this.notes.push(note);
     });
 
-    this.input.keyboard.on('keydown-A', () => this.checkInput('A'));
-    this.input.keyboard.on('keydown-S', () => this.checkInput('S'));
-    this.input.keyboard.on('keydown-D', () => this.checkInput('D'));
-    this.input.keyboard.on('keydown-F', () => this.checkInput('F'));
+    this.input.keyboard.on('keydown-A', () => this.hitNote('A'));
+    this.input.keyboard.on('keydown-S', () => this.hitNote('S'));
+    this.input.keyboard.on('keydown-D', () => this.hitNote('D'));
+    this.input.keyboard.on('keydown-F', () => this.hitNote('F'));
   }
 
-  checkInput(noteKey) {
-    const columnX = this.columns[noteKey];
-
-    for (let i = 0; i < this.notes.length; i++) {
-      const note = this.notes[i];
-      if (note.active && note.noteType === noteKey && Math.abs(note.y - this.hitLineY) < 30) {
+  hitNote(key) {
+    const lineY = 600;
+    for (const note of this.notes) {
+      if (note.active && note.noteType === key && Math.abs(note.y - lineY) < 30) {
         this.score += 10;
         note.destroy();
         break;
@@ -73,12 +52,8 @@ export default class RhythmGameScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.notes.every(n => !n.active) && this.isPlaying) {
-      this.isPlaying = false;
-      this.time.delayedCall(500, () => {
-        this.onComplete?.(this.score);
-        this.scene.stop();
-      });
+    if (this.notes.every(n => !n.active)) {
+      console.log('Done! Score:', this.score);
     }
   }
 }
