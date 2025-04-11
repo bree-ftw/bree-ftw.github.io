@@ -1,4 +1,4 @@
-import RhythmGameScene from "./scenes/RhythmGameScene";
+import RhythmGameScene from "./scenes/RhythmGameScene.js";
 
 const config = {
   type: Phaser.AUTO,
