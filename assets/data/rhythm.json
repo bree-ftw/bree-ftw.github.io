@@ -1,11 +1,11 @@
 {
     "rhythms": [
       { "time": 1000, "note": "A" },
-      { "time": 1500, "note": "S" },
-      { "time": 2000, "note": "D" },
-      { "time": 2500, "note": "F" },
+      { "time": 1500, "note": "W" },
+      { "time": 2000, "note": "S" },
+      { "time": 2500, "note": "D" },
       { "time": 3000, "note": "A" },
-      { "time": 3500, "note": "S" }
+      { "time": 3500, "note": "W" }
     ]
   }
   
