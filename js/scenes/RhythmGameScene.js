@@ -50,11 +50,6 @@ export default class RhythmGameScene extends Phaser.Scene {
       strokeThickness: 4
     }).setOrigin(0.5);
 
-    this.scoreText = this.add.text(20, 20, 'Score: 0', {
-      fontSize: '24px',
-      color: '#fff'
-    });
-
     const arrowSprites = {
       A: 'arrowLeft',
       W: 'arrowUp',
@@ -91,9 +86,19 @@ export default class RhythmGameScene extends Phaser.Scene {
       this.notes.push(note);
     });
 
+    const keyMap = {
+      'UP': 'W',
+      'DOWN': 'S',
+      'LEFT': 'A',
+      'RIGHT': 'D'
+    };
+    
     ['A', 'W', 'S', 'D'].forEach(key => {
       this.input.keyboard.on(`keydown-${key}`, () => this.checkInput(key));
     });
+    ['UP', 'DOWN', 'LEFT', 'RIGHT'].forEach(key => {
+      this.input.keyboard.on(`keydown-${key}`, () => this.checkInput(keyMap[key]));
+    });    
   }
 
   checkInput(key) {
@@ -105,7 +110,6 @@ export default class RhythmGameScene extends Phaser.Scene {
 
       if (note.noteKey === key && Math.abs(note.y - this.hitY) < tolerance) {
         this.score += 10;
-        this.scoreText.setText(`Score: ${this.score}`);
         note.hit = true;
         note.destroy();
         note.arrow.destroy();
@@ -117,6 +121,7 @@ export default class RhythmGameScene extends Phaser.Scene {
 
     if (!hit) {
       this.showFeedback('Miss!', '#f00');
+      this.score -= 10;
     }
   }
 
