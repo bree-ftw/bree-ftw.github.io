@@ -1,17 +1,30 @@
-import RhythmGameScene from "./scenes/RhythmGameScene.js";
+
+import GameScene from './scenes/GameScene.js';
+import StoryScene from './scenes/StoryScene.js';
+import MenuScene from './scenes/MenuScene.js';
+import CombatScene from './scenes/CombatScene.js';
+import RhythmGameScene from './scenes/RhythmGameScene.js';
+
+// Optional: add a basic BootScene if needed to preload global assets
 
 const config = {
   type: Phaser.AUTO,
-  width: 600,
-  height: 700,
-  backgroundColor: '#222222',
+  width: 800,
+  height: 600,
+  backgroundColor: '#000000',
+  scene: [
+    GameScene,
+    StoryScene,
+    MenuScene,
+    CombatScene,
+    RhythmGameScene
+  ],
   physics: {
     default: 'arcade',
     arcade: {
       debug: false
     }
-  },
-  scene: [RhythmGameScene]
+  }
 };
 
 const game = new Phaser.Game(config);

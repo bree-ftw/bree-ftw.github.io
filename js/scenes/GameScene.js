@@ -1,174 +1,94 @@
-import Phaser from 'phaser';
-import { openMenu, MenuScene } from '../scenes/MenuScene.js';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super({ key: 'GameScene' });
   }
 
-  init(data) {
-    this.levelData = data.levelData || [];
-    this.currentStoryNode = 0;
-    this.playerClass = null; // Store the player's class here
-  }
-
   preload() {
-    // Preload assets if necessary
+    this.load.json('gameflow', 'assets/data/gameflow.json');
   }
 
   create() {
-    // First, ask the player to choose a character (Barbarian, Wizard, Bard)
-    if (!this.playerClass) {
-      this.showCharacterSelection();
-    } else {
-      this.processStoryNode();
-    }
-  }
-
-  showCharacterSelection() {
-    openMenu(this, {
-      prompt: "Choose your character:",
-      options: {
-        "1": { text: "Barbarian", nextNode: "startGameWithBarbarian" },
-        "2": { text: "Wizard", nextNode: "startGameWithWizard" },
-        "3": { text: "Bard", nextNode: "startGameWithBard" }
-      },
-      callback: (selectedOption) => {
-        const selection = {
-          "1": "Barbarian",
-          "2": "Wizard",
-          "3": "Bard"
-        };
-        this.playerClass = selection[selectedOption];
-        this.startGame();
+    this.gameFlow = this.cache.json.get('gameflow');
+    this.player = {
+      classType: "Dog",
+      hp: 100,
+      maxHp: 100,
+      attackPower: 25,
+      img: "up.png",
+      setType: function (type) {
+        this.classType=type
+        switch (type) {
+          case "Barbarian":
+            this.classType = 'Barbarian';
+            this.hp = 150;
+            this.maxHp = 200;
+            this.attackPower = 50;
+            break;
+          case "Bard":
+            this.classType = 'Bard';
+            this.hp = 100;
+            this.maxHp = 100;
+            this.attackPower = 0;
+            break;
+          case "Wizard":
+            this.classType = 'Wizard';
+            this.hp = 75;
+            this.maxHp = 75;
+            this.attackPower = 10;
+            break;
+          default:
+            break;
+        }
       }
-    });
+    };
+
+    this.currentStep = 'intro';
+    this.loadStep(this.currentStep);
   }
 
-  startGame() {
-    // Now that the character is selected, begin the game with the selected class
-    const player = this.createPlayerByClass(this.playerClass);
-    this.scene.start('CombatScene', {
-      player: player,
-      levelKey: 'Level1', // Or wherever the player starts
-      onVictory: () => {
-        this.currentStoryNode++;
-        this.processStoryNode();
-      },
-      onDefeat: () => {
-        this.currentStoryNode++; // Optionally handle defeat state
-        this.processStoryNode();
-      }
-    });
-  }
+  loadStep(stepKey) {
+    const step = this.gameFlow[stepKey];
+    this.currentStep = stepKey;
+    console.log(step)
 
-  createPlayerByClass(classType) {
-    let player;
-    switch (classType) {
-      case 'Barbarian':
-        player = new Barbarian(this, 100, 100); // Adjust based on your actual class setup
-        break;
-      case 'Wizard':
-        player = new Wizard(this, 100, 100);
-        break;
-      case 'Bard':
-        player = new Bard(this, 100, 100);
-        break;
-      default:
-        console.error('Invalid class selected');
-        break;
+    if (step.type === 'story') {
+      console.log(step.text)
+      this.scene.start('StoryScene', {
+        text: step.text,
+        onComplete: () => {
+          if (step.next) this.loadStep(step.next);
+        }
+      });
+    } else if (step.type === 'menu') {
+      console.log(step.prompt)
+      this.scene.start('MenuScene', {
+        prompt: step.prompt,
+        options: step.options,
+        descriptions: step.descriptions || {},
+        callback: (choice) => {
+          this.scene.stop('MenuScene');
+          console.log(choice, stepKey)
+          if (stepKey === 'chooseCharacter') {
+            this.player.setType(choice);
+            console.log("set",choice,this.player.classType)
+          }
+          this.loadStep(step.options[choice]);
+        }
+      });
+    } else if (step.type === 'combat') {
+      console.log(step.enemies)
+      this.scene.start('CombatScene', {
+        enemies: step.enemies,
+        player: this.player,
+        levelKey: step.levelKey,
+        onVictory: () => {
+          if (step.next) this.loadStep(step.next);
+        },
+        onDefeat: () => {
+          this.scene.start('GameOverScene');
+        }
+      });
     }
-    return player;
-  }
-
-  processStoryNode() {
-    const node = this.levelData[this.currentStoryNode];
-
-    if (!node) {
-      console.log("No more story nodes!");
-      return;
-    }
-
-    switch (node.type) {
-      case "combat":
-        this.startCombat(node);
-        break;
-      case "decision":
-        this.showDecision(node);
-        break;
-      case "powerup":
-        this.givePowerup(node);
-        break;
-      case "story":
-        this.showStory(node);
-        break;
-      case "end":
-        this.endGame();
-        break;
-      default:
-        console.log("Unknown node type");
-        break;
-    }
-  }
-
-  startCombat(node) {
-    const player = new this.game.scene.getScene('CombatScene').player; // Pass your player object here
-    this.scene.start('CombatScene', {
-      player: player,
-      levelKey: node.levelKey,
-      onVictory: () => {
-        this.currentStoryNode++;
-        this.processStoryNode();
-      },
-      onDefeat: () => {
-        this.currentStoryNode++; // Optionally handle defeat state
-        this.processStoryNode();
-      }
-    });
-  }
-
-  showDecision(node) {
-    openMenu(this, {
-      prompt: node.prompt,
-      options: node.options,
-      callback: (selectedOption) => {
-        this.currentStoryNode = node.options[selectedOption].nextNode;
-        this.processStoryNode();
-      }
-    });
-  }
-
-  givePowerup(node) {
-    // Add logic to give player powerups here
-    this.showStory({
-      type: "story",
-      text: "You gained a power-up! Now go ahead!"
-    });
-  }
-
-  showStory(node) {
-    // Display scrolling text
-    this.add.text(50, 100, node.text, {
-      fontSize: '24px',
-      fill: '#fff',
-      wordWrap: { width: 700 }
-    });
-
-    // Automatically progress after some delay
-    this.time.delayedCall(4000, () => {
-      this.currentStoryNode++;
-      this.processStoryNode();
-    });
-  }
-
-  endGame() {
-    // Handle game ending or transition
-    console.log('Game Over or Victory!');
-    // Transition to end scene or restart
-    this.scene.start('EndScene');
-  }
-
-  update(time, delta) {
-    // Handle any updates like moving player or other game systems
   }
 }

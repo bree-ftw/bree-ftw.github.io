@@ -1,0 +1,32 @@
+{
+    "intro": {
+      "type": "story",
+      "text": "idk ",
+      "next": "chooseCharacter"
+    },
+    "chooseCharacter": {
+      "type": "menu",
+      "prompt": "Choose your class:",
+      "options": {
+        "Barbarian": "firstFight",
+        "Wizard": "firstFight",
+        "Bard": "firstFight"
+      },
+      "descriptions": {
+        "Barbarian": "idk",
+        "Wizard": "idk",
+        "Bard": "idk"
+      }
+    },
+    "firstFight": {
+      "type": "combat",
+      "levelKey": "forest1",
+      "next": "finalScene"
+    },
+    "finalScene": {
+      "type": "story",
+      "text": "idk",
+      "next": null
+    }
+  }
+  

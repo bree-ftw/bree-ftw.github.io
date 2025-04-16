@@ -7,6 +7,7 @@ export default class MenuScene extends Phaser.Scene {
     init(data) {
       this.prompt = data.prompt || 'Make a choice:';
       this.options = data.options || {};
+      this.descriptions = data.descriptions || {};
       this.callback = data.callback || (() => {});
     }
   
@@ -20,10 +21,10 @@ export default class MenuScene extends Phaser.Scene {
       }).setOrigin(0.5);
   
       const optionKeys = Object.keys(this.options);
-      const spacing = 70;
+      const spacing = 100;
   
       optionKeys.forEach((key, index) => {
-        const y = centerY + index * spacing;
+        const y = centerY/2 + index * spacing;
         
         const button = this.add.text(centerX, y, key, {
           fontSize: '20px',
@@ -36,24 +37,15 @@ export default class MenuScene extends Phaser.Scene {
         .on('pointerover', () => button.setStyle({ backgroundColor: '#555' }))
         .on('pointerout', () => button.setStyle({ backgroundColor: '#333' }))
         .on('pointerdown', () => {
-          this.scene.stop('MenuScene');
           this.callback(key);
         });
 
-        if (this.options[key]!=null) { // description
-          this.add.text(centerX, y + 25, this.options[key], {
+        if (this.descriptions[key]!=null) { // description
+          this.add.text(centerX, y + 40, this.descriptions[key], {
             fontSize: '14px',
             color: '#aaaaaa'
           }).setOrigin(0.5);
         }
       });
     }
-  }
-  
-  export function openMenu(scene, { prompt, options, callback }) {
-    scene.scene.launch('MenuScene', {
-      prompt,
-      options,
-      callback
-    });
   }
