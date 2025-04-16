@@ -146,7 +146,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   
     this.scene.input.on('pointerdown', pointer => {
         if (this.hasTriviaPower) {
-            const nearbyEnemies = enemies.filter(e =>
+            const nearbyEnemies = this.scene.enemies.filter(e =>
                 Phaser.Math.Distance.Between(pointer.x, pointer.y, e.x, e.y) < 300
               );
             nearbyEnemies.forEach(e => {
@@ -175,15 +175,31 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   
       // Pause enemy movement
       this.scene.physics.world.isPaused = true;
+      this.scene.isPaused = true;
   
       this.scene.scene.launch('RhythmGameScene', {
         onComplete: (score) => {
           this.scene.physics.world.isPaused = false;
+          this.scene.isPaused = false;
           this.rhythmStarted = false;
-  
-          if (onFinishCallback) {
-            onFinishCallback(score);
-          }
+
+          this.scene.scene.stop('RhythmGameScene');
+          this.scene.enemies.sort((a, b) => {
+            const distA = Phaser.Math.Distance.Between(this.x, this.y, a.x, a.y);
+            const distB = Phaser.Math.Distance.Between(this.x, this.y, b.x, b.y);
+            return distA - distB;
+          });
+          console.log(score)
+            var remainingDmg = score;
+            this.scene.enemies.forEach(e => {
+                console.log(e.hp)
+                if (remainingDmg==0) return;
+                const allocatedDmg = Math.min(remainingDmg,e.hp);
+                console.log(remainingDmg)
+                remainingDmg -= allocatedDmg;
+                e.takeDamage(allocatedDmg);
+                console.log("dealing", e, allocatedDmg, remainingDmg)
+            }); 
         }
       });
     });

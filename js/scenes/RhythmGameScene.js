@@ -171,7 +171,7 @@ export default class RhythmGameScene extends Phaser.Scene {
     }).setOrigin(0.5).setInteractive();
 
     button.on('pointerdown', () => {
-      this.scene.start('CombatScene', { player: this.player });
+      this.onComplete(this.score);
     });
   }
 }
