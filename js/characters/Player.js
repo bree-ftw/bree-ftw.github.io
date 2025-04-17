@@ -57,21 +57,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  enterCombat(enemies, triviaData = null, onRhythmFinish = null) {
-    console.log("enter combat", this.classType, enemies)
+  enterCombat(triviaData = null) {
+    console.log("enter combat", this.classType)
     switch (this.classType) {
       case 'Barbarian':
-        this.enableBarbarianCombat(enemies);
+        this.enableBarbarianCombat();
         break;
       case 'Wizard':
-        this.enableWizardCombat(enemies, triviaData);
+        this.enableWizardCombat(triviaData);
         break;
       case 'Bard':
-        this.enableBardCombat(enemies, onRhythmFinish);
+        this.enableBardCombat();
         break;
     }
   }
-  enableBarbarianCombat(enemies) {
+  enableBarbarianCombat() {
     this.scene.input.keyboard.on('keydown-W', () => this.setVelocityY(-100));
     this.scene.input.keyboard.on('keydown-S', () => this.setVelocityY(100));
     this.scene.input.keyboard.on('keydown-A', () => this.setVelocityX(-100));
@@ -86,7 +86,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         console
       if (!this.canAttack) return;
   
-      const clickedEnemy = enemies.find(e => e.getBounds().contains(pointer.x, pointer.y));
+      const clickedEnemy = this.scene.enemies.find(e => e.getBounds().contains(pointer.x, pointer.y));
 
     if (clickedEnemy &&
         Phaser.Math.Distance.Between(this.x, this.y, clickedEnemy.x, clickedEnemy.y) < 200) {
@@ -96,7 +96,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     });
   }
-  enableWizardCombat(enemies, triviaData) {
+  enableWizardCombat(triviaData) {
 
     this.scene.input.keyboard.on('keydown-W', () => this.setVelocityY(-100));
     this.scene.input.keyboard.on('keydown-S', () => this.setVelocityY(100));
@@ -110,10 +110,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.hasTriviaPower = false;
   
     this.scene.input.keyboard.on('keydown-E', () => {
-        if (this.triviaActive) return;
-  
-        const trivia = triviaData[this.currentQuestion];
-        console.log(this.currentQuestion, trivia, triviaData)
+        if (this.triviaActive || !triviaData || triviaData.length === 0) return;
+        const currentQuestion = Math.floor(Math.random() * triviaData.length);
+        const trivia = triviaData[currentQuestion];
+        if (!trivia) return; // avoid accessing undefined question
+      
+        console.log(currentQuestion, trivia, triviaData);
         const allAnswers = this.shuffleAnswers([trivia.correctAnswer, ...trivia.wrongAnswers]);
 
         const options = {};
@@ -134,8 +136,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                     if (selectedAnswer === trivia.correctAnswer) {
                       console.log('Correct! You cast your spell.');
                       this.hasTriviaPower = true;
-                      this.currentQuestion = (this.currentQuestion + 1) % triviaData.length; // Move to the next question
-                      console.log("cq", this.currentQuestion);
+                      console.log("cq", currentQuestion);
                     } else {
                       console.log('Wrong answer!');
                     }
@@ -149,12 +150,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             const nearbyEnemies = this.scene.enemies.filter(e =>
                 Phaser.Math.Distance.Between(pointer.x, pointer.y, e.x, e.y) < 300
               );
-            nearbyEnemies.forEach(e => {
-                e.takeDamage(75)
-            });              
+              if (nearbyEnemies.length > 0) {
+                nearbyEnemies.forEach(e => e.takeDamage(150));
+                this.hasTriviaPower = false; // clear after use
+              }           
+              console.log("Spell cast on", nearbyEnemies.length, "enemies", this.scene.enemies);
         } else {
             if (!this.canAttack) return;
-            const clickedEnemy = enemies.find(e => e.getBounds().contains(pointer.x, pointer.y));
+            const clickedEnemy = this.scene.enemies.find(e => e.getBounds().contains(pointer.x, pointer.y));
 
     if (clickedEnemy &&
         Phaser.Math.Distance.Between(this.x, this.y, clickedEnemy.x, clickedEnemy.y) < 200) {
@@ -165,7 +168,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     });
   }
-  enableBardCombat(enemies, onFinishCallback) {
+
+  enableBardCombat() {
     this.setVelocity(0, 0); // stays stationary
   
     this.scene.input.keyboard.on('keydown-E', () => {

@@ -101,9 +101,7 @@ export default class CombatScene extends Phaser.Scene {
     this.player.die = () => this.onDefeat();
 
     this.player.create?.();
-    this.player.enterCombat(this.enemies, this.triviaData, () => {
-      this.isPaused = false;
-    });
+    this.player.enterCombat(this.triviaData);
 
     this.lastAdvanceTime = 0;
     this.isPaused = false;
@@ -119,7 +117,6 @@ export default class CombatScene extends Phaser.Scene {
         this.activeEnemies.push(next);
         this.lastAdvanceTime = time;
       }
-      this.player.enterCombat(this.enemies)
     }
 
     this.activeEnemies.forEach(enemy => {

@@ -97,7 +97,7 @@ export default class GameScene extends Phaser.Scene {
         },
         onDefeat: () => {
           this.scene.stop('CombatScene')
-          this.loadStep('deathScene');
+          this.loadStep('combatDeath');
         }
       });
     }

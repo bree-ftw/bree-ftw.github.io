@@ -37,6 +37,13 @@
       ],
       "next": "1.6"
     },
+    "combatDeath": {
+      "type":"story",
+      "text": [
+        "You died."
+      ],
+      "next":"creditScene"
+    },
     "1.4": {
       "type": "story",
       "text": [
@@ -139,7 +146,7 @@
       "text": [
         "Everyone hates you for the rest of your life.",
         "You die old, friendless, and unaccomplished at the age of 13.",
-        "img:up.png",
+        "img:rip.png",
         "RIP"
       ],
       "next": null
@@ -213,8 +220,7 @@
       "text": [
         "Everyone hates you for the rest of your life.",
         "You die old, friendless, and unaccomplished at the age of 13.",
-        "img:up.png",
-        "RIP"
+        "img:rip.png"
       ],
       "next": null
     },
