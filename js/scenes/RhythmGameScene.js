@@ -1,5 +1,3 @@
-// src/scenes/RhythmGameScene.js
-
 export default class RhythmGameScene extends Phaser.Scene {
   constructor() {
     super({ key: 'RhythmGameScene' });
@@ -11,20 +9,21 @@ export default class RhythmGameScene extends Phaser.Scene {
 
   preload() {
     this.load.json('rhythms', 'assets/data/rhythm.json');
-
-    // Preload arrow sprites (replace these with your actual filenames)
     this.load.image('arrowLeft', 'assets/images/left.png');
     this.load.image('arrowUp', 'assets/images/up.png');
     this.load.image('arrowDown', 'assets/images/down.png');
     this.load.image('arrowRight', 'assets/images/right.png');
+    this.load.audio('op19no6', 'assets/audio/op19no6.mp3');
   }
 
   create() {
     this.score = 0;
     this.notes = [];
+    this.misses = 0;
     this.isPlaying = true;
+    this.music = this.sound.add('op19no6');
 
-    const rhythmData = this.cache.json.get('rhythms').rhythms;
+    const rhythmData = this.cache.json.get('rhythms')["3"];
 
     const screenCenterX = this.scale.width / 2;
     const columnWidth = 100;
@@ -59,30 +58,13 @@ export default class RhythmGameScene extends Phaser.Scene {
 
     rhythmData.forEach(data => {
       const x = this.columns[data.note];
-      const y = 0;
-
-      const note = this.add.rectangle(x, y, 60, 40, 0x000000).setOrigin(0.5).setAlpha(0);
-      const arrow = this.add.image(x, y, arrowSprites[data.note]).setDisplaySize(60, 60).setOrigin(0.5);
-
+      const note = this.add.rectangle(x, 0, 60, 40, 0x000000).setOrigin(0.5).setAlpha(0);
+      const arrow = this.add.image(x, 0, arrowSprites[data.note]).setDisplaySize(60, 60).setOrigin(0.5);
       note.noteKey = data.note;
       note.arrow = arrow;
       note.hit = false;
-      note.isFalling = true;
-
-      this.tweens.add({
-        targets: [note, arrow],
-        y: this.hitY,
-        duration: 2000,
-        delay: data.time,
-        ease: 'Linear',
-        onUpdate: () => {
-          note.isFalling = true;
-        },
-        onComplete: () => {
-          note.isFalling = false;
-        }
-      });
-
+      note.time = data.time; // The spawn time
+      note.fallDuration = 2000; // How long the note will take to fall to the bottom (in ms)
       this.notes.push(note);
     });
 
@@ -92,13 +74,15 @@ export default class RhythmGameScene extends Phaser.Scene {
       'LEFT': 'A',
       'RIGHT': 'D'
     };
-    
+
     ['A', 'W', 'S', 'D'].forEach(key => {
       this.input.keyboard.on(`keydown-${key}`, () => this.checkInput(key));
     });
     ['UP', 'DOWN', 'LEFT', 'RIGHT'].forEach(key => {
       this.input.keyboard.on(`keydown-${key}`, () => this.checkInput(keyMap[key]));
-    });    
+    });
+
+    this.music.play();
   }
 
   checkInput(key) {
@@ -106,7 +90,7 @@ export default class RhythmGameScene extends Phaser.Scene {
     let hit = false;
 
     for (const note of this.notes) {
-      if (!note.isFalling || note.hit) continue;
+      if (note.hit) continue;
 
       if (note.noteKey === key && Math.abs(note.y - this.hitY) < tolerance) {
         this.score += 10;
@@ -122,6 +106,7 @@ export default class RhythmGameScene extends Phaser.Scene {
     if (!hit) {
       this.showFeedback('Miss!', '#f00');
       this.score -= 10;
+      this.misses++;
     }
   }
 
@@ -133,26 +118,39 @@ export default class RhythmGameScene extends Phaser.Scene {
   }
 
   update() {
+    const elapsed = this.music.seek * 1000; // Use audio-based clock (in ms)
+
     this.notes = this.notes.filter(note => {
       if (!note.active) return false;
 
+      const timeUntilHit = note.time - elapsed; // Time remaining until the note should hit the bottom
+      const progress = Math.max(0, 1 - (timeUntilHit / note.fallDuration)); // Progress of fall (from 0 to 1)
+      note.y = Phaser.Math.Linear(0, this.hitY, progress);
+      note.arrow.y = note.y;
+      note.setAlpha(1);
+
+      // Remove missed notes
       if (note.y > this.scale.height) {
         note.destroy();
         note.arrow.destroy();
         return false;
       }
 
-      note.arrow.y = note.y;
       return true;
     });
 
-    if (this.notes.every(note => note.hit || !note.isFalling) && this.isPlaying) {
+    if (this.notes.every(note => note.hit || !note.active) && this.isPlaying) {
+      this.isPlaying = false;
+      this.showScore();
+    }
+    if (this.misses > 15 && this.isPlaying) {
       this.isPlaying = false;
       this.showScore();
     }
   }
 
   showScore() {
+    this.music.stop();
     const screenCenterX = this.scale.width / 2;
     const screenCenterY = this.scale.height / 2;
 

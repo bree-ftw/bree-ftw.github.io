@@ -1,32 +1,420 @@
 {
-    "intro": {
-      "type": "story",
-      "text": "idk ",
-      "next": "chooseCharacter"
-    },
     "chooseCharacter": {
       "type": "menu",
       "prompt": "Choose your class:",
       "options": {
-        "Barbarian": "firstFight",
-        "Wizard": "firstFight",
-        "Bard": "firstFight"
+        "Barbarian": "1.1",
+        "Wizard": "1.1",
+        "Bard": "1.1"
       },
       "descriptions": {
-        "Barbarian": "idk",
-        "Wizard": "idk",
-        "Bard": "idk"
+        "Barbarian": "Use quick reflexes and strength to obliterate opponents",
+        "Wizard": "Cast Arcane Spells using your vast knowledge",
+        "Bard": "Play amazing songs using your trusty guitar to stun your enemies"
       }
     },
-    "firstFight": {
-      "type": "combat",
-      "levelKey": "forest1",
-      "next": "finalScene"
-    },
-    "finalScene": {
+    "1.1": {
       "type": "story",
-      "text": "idk",
+      "text": [
+        "As you come home after a long day of sleeping, eating, and being amazing, you notice something lurking in the shadows."
+      ],
+      "next": "1.2"
+    },
+    "1.2": {
+      "type": "menu",
+      "prompt": "What do you do?",
+      "options": {
+        "Run away screaming": "1.3",
+        "Ask who the figure is": "1.4",
+        "Ready your wand/guitar/sword": "1.5"
+      }
+    },
+    "1.3": {
+      "type": "story",
+      "text": [
+        "You find a police officer and return to your house, but your magical wishbone has been stolen.",
+        "The policeman has now left."
+      ],
+      "next": "1.6"
+    },
+    "1.4": {
+      "type": "story",
+      "text": [
+        "The mysterious person hisses, then says, 'I am the almighty Fuzzy McFuzzface, bow to my mightiness!'"
+      ],
+      "next": "1.7"
+    },
+    "1.5": {
+      "type": "story",
+      "text": [
+        "The figure picks up a ball and throws it.",
+        "Despite all your will power, you are unable to resist the urge to go get it.",
+        "Once you return, you realize your magical wishbone has been stolen."
+      ],
+      "next": "1.6"
+    },
+    "1.6": {
+      "type": "story",
+      "text": [
+        "In the shadows, a little ball starts squeaking.",
+        "As you move closer, you realize that the magical wishbone has left a trail of magical power.",
+        "That has caused inanimate objects to become evil."
+      ],
+      "next": "1.10"
+    },
+    "1.7": {
+      "type": "menu",
+      "prompt": "How do you respond?",
+      "options": {
+        "\"NAUR!\"": "1.6",
+        "\"I'll pass, thanks for the offer\"": "1.6",
+        "\"Aye aye, captain!\"": "deathScene"
+      }
+    },
+    "deathScene": {
+      "type": "story",
+      "text": [
+        "Everyone hates you for the rest of your life.",
+        "You die old, friendless, and unaccomplished at the age of 13.",
+        "img:rip.png"
+      ],
+      "next": "creditScene"
+    },
+    "1.10": {
+      "type": "menu",
+      "prompt": "What do you do?",
+      "options": {
+        "Fight the Ball": "1.11",
+        "Politely ask it to leave": "1.12",
+        "Run away screaming": "deathScene"
+      }
+    },
+    "1.11": {
+      "type": "combat",
+      "levelKey": "ballBattle",
+      "next": "2.1"
+    },
+    "1.12": {
+      "type": "story",
+      "text": [
+        "You politely ask the ball to leave.",
+        "The ball does not like that. It attacks!"
+      ],
+      "next": "1.11"
+    },
+    "2.1": {
+      "type": "story",
+      "text": [
+        "You follow the magical trail through a forest.",
+        "On the right, you notice a snake.",
+        "But something is familiar about it..."
+      ],
+      "next": "2.2"
+    },
+    "2.2": {
+      "type": "menu",
+      "prompt": "What do you do?",
+      "options": {
+        "Poke it with a stick": "2.3",
+        "Do nothing and continue on your way": "2.4",
+        "Run away screaming": "2.5"
+      }
+    },
+    "2.3": {
+      "type": "combat",
+      "levelKey": "snakeBattle",
+      "next": "2.6"
+    },
+    "2.4": {
+      "type": "story",
+      "text": [
+        "You ignore the snake and continue walking.",
+        "It hisses softly as you pass, but doesn't follow.",
+        "You feel a strange sense of déjà vu."
+      ],
+      "next": "2.6"
+    },
+    "2.5": {
+      "type": "story",
+      "text": [
+        "Everyone hates you for the rest of your life.",
+        "You die old, friendless, and unaccomplished at the age of 13.",
+        "img:up.png",
+        "RIP"
+      ],
       "next": null
+    },
+    "2.6": {
+      "type": "story",
+      "text": [
+        "You find a clearing where the magical energy pulses stronger.",
+        "The trail continues deeper into the woods..."
+      ],
+      "next": "3.1"
+    },
+    "3.1": {
+      "type": "story",
+      "text": [
+        "After defeating the mighty rope snake, you continue your adventure through the jungle.",
+        "You hear something behind you.",
+        "A tiger is stalking you, but something is unusual about it.",
+        "It has gashes across its whole body, its eyes are gouged out, and its blood is… white?",
+        "\"You will pay for what you have done to my kind,\" the voice rasped, shouting at the… tree?"
+      ],
+      "next": "3.2"
+    },
+    "3.2": {
+      "type": "menu",
+      "prompt": "How do you respond?",
+      "options": {
+        "Are you talking to me?": "3.3",
+        "I WAS FRAMED IT WAS 3RD COUSIN TWICE REMOVED": "3.4",
+        "Run away screaming": "3.8"
+      }
+    },
+    "3.3": {
+      "type": "story",
+      "text": [
+        "\"Of course I'm talking to you, jerk,\" the tiger-tree snaps."
+      ],
+      "next": "3.5"
+    },
+    "3.4": {
+      "type": "story",
+      "text": [
+        "\"That's what they all say,\" the voice growls.",
+        "\"You tortured me viciously for your own entertainment, but now I shall have my revenge.\""
+      ],
+      "next": "3.5"
+    },
+    "3.5": {
+      "type": "menu",
+      "prompt": "What's your next move?",
+      "options": {
+        "Yea that does sound like me, we cool now?": "3.6",
+        "IT WASN’T ME IT WAS THE 2ND COUSIN THRICE REMOVED": "3.6",
+        "Run away screaming": "3.8"
+      }
+    },
+    "3.6": {
+      "type": "story",
+      "text": [
+        "\"DIEEEEE!\" the tiger roars as it lunges forward!"
+      ],
+      "next": "3.7"
+    },
+    "3.7": {
+      "type": "combat",
+      "levelKey": "revengeTigerBattle",
+      "next": "3.9"
+    },
+    "3.8": {
+      "type": "story",
+      "text": [
+        "Everyone hates you for the rest of your life.",
+        "You die old, friendless, and unaccomplished at the age of 13.",
+        "img:up.png",
+        "RIP"
+      ],
+      "next": null
+    },
+    "3.9": {
+      "type": "story",
+      "text": [
+        "The tiger evaporates into glowing mist as the cursed jungle fades.",
+        "You stand alone, breathing heavy, with one thought echoing in your head...",
+        "\"What *did* I do to those tigers?\""
+      ],
+      "next": "4.1"
+    },
+    "4.1": {
+      "type": "story",
+      "text": [
+        "As you continue your travels, you reach a hut in the woods, what would you like to do?"
+      ],
+      "next": "4.2"
+    },
+    "4.2": {
+      "type": "menu",
+      "prompt": "What do you want to do?",
+      "options": {
+        "Go past it": "4.3",
+        "Burn it down": "4.4",
+        "Go into it": "4.5"
+      }
+    },
+    "4.3": {
+      "type": "story",
+      "text": [
+        "The path seems to warp around the hut, you are unable to leave the area.",
+        "You must choose another option."
+      ],
+      "next": "4.2"
+    },
+    "4.4": {
+      "type": "story",
+      "text": [
+        "You attempt to use some match sticks, but your paws aren’t adept at setting things on fire.",
+        "You accidentally burn yourself repeatedly."
+      ],
+      "next": "4.2"
+    },
+    "4.5": {
+      "type": "story",
+      "text": [
+        "As you enter the hut, you see a bird sitting in a corner surrounded by squirrels.",
+        "The bird introduces himself as Cornelius and offers to help you."
+      ],
+      "next": "4.6"
+    },
+    "4.6": {
+      "type": "menu",
+      "prompt": "What do you want to do?",
+      "options": {
+        "Accept the offer": "4.7",
+        "Ask for his credentials": "4.8",
+        "Run away screaming": "4.9"
+      }
+    },
+    "4.7": {
+      "type": "combat",
+      "levelKey": "squirrelBattle",
+      "next": "4.10"
+    },
+    "4.8": {
+      "type": "story",
+      "text": [
+        "Cornelius replies, 'I graduated top of my class at the School for Young Birds Who Would Like to Spend Their Whole Life Living in a Forest with Squirrels Until Someone Comes Along and Needs Their Help for 2 Hours.'"
+      ],
+      "next": "4.9"
+    },
+    "4.9": {
+      "type": "menu",
+      "prompt": "What do you want to do?",
+      "options": {
+        "Accept the offer": "4.7",
+        "Ask how many people were in his class": "4.9's",
+        "Run away screaming": "deathScene"
+      }
+    },
+    "4.9'": {
+        "type":"dialogue",
+        "with":"cornelius.png",
+        "text":[
+            {"with":"Why do you want to know?"},
+            {"you":"For uhh... reasons ;-;"},
+            {"with":"Just trust me. You should accept my offer."},
+            {"you":"Hmmmmmmm"}
+        ],
+        "next":"4.9''"
+    },
+    "4.9''": {
+      "type": "menu",
+      "prompt": "What do you want to do?",
+      "options": {
+        "Accept the offer": "4.7",
+        "Run away screaming": "deathScene"
+      }
+    },
+    "4.10": {
+      "type": "story",
+      "text": [
+        "The squirrels are defeated.",
+        "Cornelius congratulates you on your victory and gives you a token of his gratitude."
+      ],
+      "next": "5.1"
+    },
+    "5.1": {
+      "type": "story",
+      "text": [
+        "After much effort, you finally track down the vile Fuzzy McFuzzface."
+      ],
+      "next": "5.2"
+    },
+    "5.2": {
+      "type": "menu",
+      "prompt": "What do you want to do?",
+      "options": {
+        "Surrender to my awesomeness": "deathScene",
+        "Fight me!": "5.3",
+        "Run away screaming": "deathScene"
+      },
+      "descriptions":{
+        "Fight me!":"The only rule is that there are no rules, even though the rule is a rule which contradicts meaning we should ignore it so there are essentially no rules except for the one that isn’t true."
+      }
+    },
+    "5.3": {
+      "type": "story",
+      "text": [
+        "You challenge Fuzzy McFuzzface to a fight with no rules. He accepts with a smirk."
+      ],
+      "next": "5.4"
+    },
+    "5.4": {
+      "type": "combat",
+      "levelKey": "fuzzyMcFuzzfaceBattle",
+      "next": "5.5"
+    },
+    "5.5": {
+      "type": "story",
+      "text": [
+        "After defeating Fuzzy McFuzzface, you stand victorious.",
+        "A huge explosion erupts as Fuzzy's final words echo through the air, 'AUR NAUR!'"
+      ],
+      "next": "5.6"
+    },
+    "5.6": {
+      "type": "story",
+      "text": [
+        "After a lot of hard work, you have finally beaten Fuzzy McFuzzface, and everyone would like you to give a speech."
+      ],
+      "next": "5.7"
+    },
+    "5.7": {
+      "type": "menu",
+      "prompt": "What do you do?",
+      "options": {
+        "Talk about how you wouldn’t be here if it wasn’t for your family": "5.8",
+        "Play dead": "5.9",
+        "Run away screaming": "congratulations"
+      }
+    },
+    "5.8": {
+      "type": "story",
+      "text": [
+        "It works for a bit, but then the paparazzi mob you."
+      ],
+      "next": "deathScene"
+    },
+    "5.9": {
+      "type": "story",
+      "text": [
+        "You unfortunately can’t hide your breathing and they find out you are faking it."
+      ],
+      "next": "deathScene"
+    },
+    "congratulations": {
+      "type": "story",
+      "text": [
+        "Congratulations on your victory, you’ve triumphed over Fuzzy McFuzzface!",
+        "The student has become... not quite the master but better than the student. Think a TA."
+      ],
+      "next": "creditScene"
+    },
+    "creditScene": {
+        "type":"story",
+        "text":[
+            "CREDITS:\nProgramming: Vinayak Vikram\nStory: Avinash Kumar\nArtwork: Jill Fulton",
+            "and most importantly, the most amazing, best, adorable dog in the world...",
+            "Breehy-hinny-brinny-hooey-hah! (or bree/breebo for short)",
+            "img:breebo_1.png",
+            "img:breebo_2.png",
+            "img:breebo_3.png",
+            "img:breebo_4.png",
+            "img:breebo_5.png",
+            "img:breebo_6.png",
+            "img:breebo_8.png"
+        ]
     }
   }
   

@@ -20,7 +20,11 @@ export default class CombatScene extends Phaser.Scene {
   preload() {
     this.load.json('enemies', 'assets/data/enemies.json');
   this.load.json('trivia', 'assets/data/trivia.json');
-    this.load.image('down', 'assets/images/down.png')
+    this.load.image('rubberBall', 'assets/images/rubberBall.png');
+    this.load.image('snake', 'assets/images/snake.png');
+    this.load.image('squirrel', 'assets/images/squirrel.png');
+    this.load.image('tiger', 'assets/images/tiger.png');
+    this.load.image('fuzzy', 'assets/images/fuzzy.png');
     this.load.image('breebo', 'assets/images/breebo.png');
     this.load.image('barbarian', 'assets/images/barbarian.png');
     this.load.image('bard', 'assets/images/bard.png');
@@ -46,10 +50,10 @@ export default class CombatScene extends Phaser.Scene {
   
       for (let i = 0; i < config.n; i++) {
         const { x, y } = this.getRandomEdgePosition();
-        const enemy = new Enemy(this, x, y, config.att, config.hp, k);
+        const enemy = new Enemy(this, x, y, config.att, config.hp, k, config.spd);
         enemy.attackCooldown = 0;
   
-        this.add.existing(enemy).setDisplaySize(60, 60);
+        this.add.existing(enemy).setDisplaySize(config.size[0], config.size[1]);
         this.physics.add.existing(enemy);
         enemy.setCollideWorldBounds(true);
   
@@ -120,7 +124,7 @@ export default class CombatScene extends Phaser.Scene {
 
     this.activeEnemies.forEach(enemy => {
       if (enemy.active && this.player.active) {
-        this.physics.moveToObject(enemy, this.player, 40);
+        this.physics.moveToObject(enemy, this.player, enemy.spd);
         enemy.attack(time);
         enemy.healthText.setPosition(enemy.x, enemy.y - 30);
       }

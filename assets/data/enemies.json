@@ -1,9 +1,47 @@
 {
-    "forest1": {
-      "down": {
-        "n": 10,
+    "ballBattle": {
+      "rubberBall": {
+        "n": 15,
         "hp": 25,
-        "att": 25
+        "att": 25,
+        "spd":30,
+        "size":[60,60]
+      }
+    },
+    "snakeBattle": {
+      "snake": {
+        "n": 3,
+        "hp": 100,
+        "att": 75,
+        "spd":100,
+        "size":[80,80]
+      }
+    },
+    "revengeTigerBattle": {
+      "tiger": {
+        "n": 1,
+        "hp": 200,
+        "att": 100,
+        "spd":150,
+        "size":[100,80]
+      }
+    },
+    "squirrelBattle": {
+      "squirrel": {
+        "n": 15,
+        "hp": 15,
+        "att": 15,
+        "spd":125,
+        "size":[40,40]
+      }
+    },
+    "fuzzyMcFuzzfaceBattle": {
+      "fuzzy": {
+        "n": 1,
+        "hp": 500,
+        "att": 100,
+        "spd":150,
+        "size":[139,200]
       }
     }
   }

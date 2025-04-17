@@ -43,7 +43,7 @@ export default class GameScene extends Phaser.Scene {
       }
     };
 
-    this.currentStep = 'intro';
+    this.currentStep = 'chooseCharacter';
     this.loadStep(this.currentStep);
   }
 
@@ -57,6 +57,15 @@ export default class GameScene extends Phaser.Scene {
       this.scene.start('StoryScene', {
         text: step.text,
         onComplete: () => {
+          this.scene.stop('StoryScene');
+          if (step.next) this.loadStep(step.next);
+        }
+      });
+    } else if (step.type === 'dialogue') {
+      this.scene.start('DialogueScene', {
+        dialogue: step,
+        onComplete: () => {
+          this.scene.stop('DialogueScene');
           if (step.next) this.loadStep(step.next);
         }
       });
@@ -83,10 +92,12 @@ export default class GameScene extends Phaser.Scene {
         player: this.player,
         levelKey: step.levelKey,
         onVictory: () => {
+          this.scene.stop('CombatScene')
           if (step.next) this.loadStep(step.next);
         },
         onDefeat: () => {
-          this.scene.start('GameOverScene');
+          this.scene.stop('CombatScene')
+          this.loadStep('deathScene');
         }
       });
     }

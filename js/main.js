@@ -4,6 +4,7 @@ import StoryScene from './scenes/StoryScene.js';
 import MenuScene from './scenes/MenuScene.js';
 import CombatScene from './scenes/CombatScene.js';
 import RhythmGameScene from './scenes/RhythmGameScene.js';
+import DialogueScene from './scenes/DialogueScene.js';
 
 // Optional: add a basic BootScene if needed to preload global assets
 
@@ -17,7 +18,8 @@ const config = {
     StoryScene,
     MenuScene,
     CombatScene,
-    RhythmGameScene
+    RhythmGameScene,
+    DialogueScene
   ],
   physics: {
     default: 'arcade',
