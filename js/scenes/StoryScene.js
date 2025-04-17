@@ -6,6 +6,7 @@ export default class StoryScene extends Phaser.Scene {
     init(data) {
       this.storyText = data.text || [];
       this.onComplete = data.onComplete || (() => {});
+      this.pt = data.pt || "";
       this.currentIndex = 0;
       this.displayedItem = null;
     }
@@ -45,7 +46,9 @@ export default class StoryScene extends Phaser.Scene {
           this.displayedItem.displayWidth = 200;       // Set the width to 200 pixels
           this.displayedItem.scaleY = this.displayedItem.scaleX;
       } else {
-        this.displayedItem = this.add.text(this.scale.width / 2, this.scale.height / 2, entry, {
+        const weaponsDict = {"Barbarian":"Sword","Wizard":"Wand","Bard":"Guitar"}
+        const t = entry.replace('$weapon', weaponsDict[this.pt])
+        this.displayedItem = this.add.text(this.scale.width / 2, this.scale.height / 2, t, {
           fontSize: '28px',
           color: '#ffffff',
           wordWrap: { width: this.scale.width - 100 },
@@ -62,7 +65,8 @@ export default class StoryScene extends Phaser.Scene {
   
     advanceStory() {
       this.currentIndex++;
-  
+
+      console.log(this.currentIndex, this.storyText.length)
       if (this.currentIndex >= this.storyText.length) {
         this.onComplete();
       } else {

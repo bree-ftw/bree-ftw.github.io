@@ -34,15 +34,6 @@
         "spd":125,
         "size":[40,40]
       }
-    },
-    "fuzzyMcFuzzfaceBattle": {
-      "fuzzy": {
-        "n": 1,
-        "hp": 500,
-        "att": 75,
-        "spd":150,
-        "size":[139,200]
-      }
     }
   }
   

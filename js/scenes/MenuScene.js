@@ -9,6 +9,7 @@ export default class MenuScene extends Phaser.Scene {
       this.options = data.options || {};
       this.descriptions = data.descriptions || {};
       this.callback = data.callback || (() => {});
+      this.pt = data.pt || ""
     }
   
     create() {
@@ -24,9 +25,11 @@ export default class MenuScene extends Phaser.Scene {
       const spacing = 100;
   
       optionKeys.forEach((key, index) => {
+        const weaponsDict = {"Barbarian":"Sword","Wizard":"Wand","Bard":"Guitar"}
+        const t = key.replace('$weapon', weaponsDict[this.pt])
         const y = centerY/2 + index * spacing;
         
-        const button = this.add.text(centerX, y, key, {
+        const button = this.add.text(centerX, y, t, {
           fontSize: '20px',
           backgroundColor: '#333',
           padding: { x: 10, y: 5 },

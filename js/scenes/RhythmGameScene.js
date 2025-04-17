@@ -5,6 +5,8 @@ export default class RhythmGameScene extends Phaser.Scene {
 
   init(data) {
     this.onComplete = data.onComplete || (() => {});
+    this.hits=0;
+    this.misses=0;
   }
 
   preload() {
@@ -22,6 +24,7 @@ export default class RhythmGameScene extends Phaser.Scene {
     this.misses = 0;
     this.isPlaying = true;
     this.music = this.sound.add('op19no6');
+    console.log("startedr")
 
     const rhythmData = this.cache.json.get('rhythms')["3"];
 
@@ -82,11 +85,13 @@ export default class RhythmGameScene extends Phaser.Scene {
       this.input.keyboard.on(`keydown-${key}`, () => this.checkInput(keyMap[key]));
     });
 
+    console.log("reached")
+
     this.music.play();
   }
 
   checkInput(key) {
-    const tolerance = 100;
+    const tolerance = 50;
     let hit = false;
 
     for (const note of this.notes) {
@@ -94,6 +99,7 @@ export default class RhythmGameScene extends Phaser.Scene {
 
       if (note.noteKey === key && Math.abs(note.y - this.hitY) < tolerance) {
         this.score += 10;
+        this.hits++;
         note.hit = true;
         note.destroy();
         note.arrow.destroy();
@@ -169,7 +175,7 @@ export default class RhythmGameScene extends Phaser.Scene {
     }).setOrigin(0.5).setInteractive();
 
     button.on('pointerdown', () => {
-      this.onComplete(this.score);
+      this.onComplete(this.score,this.hits,this.misses);
     });
   }
 }

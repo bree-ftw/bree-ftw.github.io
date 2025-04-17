@@ -15,6 +15,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.maxHp = 100;
     this.attackPower = 25;
     this.canAttack = true;
+    this.healthText = this.scene.add.text(this.x, this.y - 50, `HP: ${this.hp}`, {
+      fontSize: '18px',
+      fill: '#fff',
+      stroke: '#000',
+      strokeThickness: 3
+    }).setOrigin(0.5);
+    this.playedRhythm = false;
   }
 
   setType(type) {
@@ -55,7 +62,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.hp = 0;
       this.die?.();
     }
+    if (this.healthText) {
+      this.healthText.setText(`HP: ${this.hp}`);
+    }
   }
+  die() {
+  
+    if (this.healthText) {
+      this.healthText.destroy();
+      this.healthText = null;
+    }
+    this.scene.onDefeat();
+  }
+  
 
   enterCombat(triviaData = null) {
     console.log("enter combat", this.classType)
@@ -72,10 +91,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
   enableBarbarianCombat() {
-    this.scene.input.keyboard.on('keydown-W', () => this.setVelocityY(-100));
-    this.scene.input.keyboard.on('keydown-S', () => this.setVelocityY(100));
-    this.scene.input.keyboard.on('keydown-A', () => this.setVelocityX(-100));
-    this.scene.input.keyboard.on('keydown-D', () => this.setVelocityX(100));
+    this.scene.input.keyboard.on('keydown-W', () => this.setVelocityY(-200));
+    this.scene.input.keyboard.on('keydown-S', () => this.setVelocityY(200));
+    this.scene.input.keyboard.on('keydown-A', () => this.setVelocityX(-200));
+    this.scene.input.keyboard.on('keydown-D', () => this.setVelocityX(200));
   
     this.scene.input.keyboard.on('keyup-W', () => this.setVelocityY(0));
     this.scene.input.keyboard.on('keyup-S', () => this.setVelocityY(0));
@@ -98,10 +117,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
   enableWizardCombat(triviaData) {
 
-    this.scene.input.keyboard.on('keydown-W', () => this.setVelocityY(-100));
-    this.scene.input.keyboard.on('keydown-S', () => this.setVelocityY(100));
-    this.scene.input.keyboard.on('keydown-A', () => this.setVelocityX(-100));
-    this.scene.input.keyboard.on('keydown-D', () => this.setVelocityX(100));
+    this.scene.input.keyboard.on('keydown-W', () => this.setVelocityY(-200));
+    this.scene.input.keyboard.on('keydown-S', () => this.setVelocityY(200));
+    this.scene.input.keyboard.on('keydown-A', () => this.setVelocityX(-200));
+    this.scene.input.keyboard.on('keydown-D', () => this.setVelocityX(200));
   
     this.scene.input.keyboard.on('keyup-W', () => this.setVelocityY(0));
     this.scene.input.keyboard.on('keyup-S', () => this.setVelocityY(0));
@@ -110,45 +129,62 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.hasTriviaPower = false;
   
     this.scene.input.keyboard.on('keydown-E', () => {
-        if (this.triviaActive || !triviaData || triviaData.length === 0) return;
-        const currentQuestion = Math.floor(Math.random() * triviaData.length);
-        const trivia = triviaData[currentQuestion];
-        if (!trivia) return; // avoid accessing undefined question
-      
-        console.log(currentQuestion, trivia, triviaData);
-        const allAnswers = this.shuffleAnswers([trivia.correctAnswer, ...trivia.wrongAnswers]);
-
-        const options = {};
-        allAnswers.forEach((answer, index) => {
-            options[answer] = null;
+        this.scene.input.keyboard.on('keyup-E', () => {
+          this.scene.physics.world.isPaused = true;
+          this.scene.isPaused = true;
+          if (this.triviaActive || !triviaData || triviaData.length === 0) return;
+          const currentQuestion = Math.floor(Math.random() * triviaData.length);
+          const trivia = triviaData[currentQuestion];
+          if (!trivia) return; // avoid accessing undefined question
+        
+          console.log(currentQuestion, trivia, triviaData);
+          const allAnswers = this.shuffleAnswers([trivia.correctAnswer, ...trivia.wrongAnswers]);
+  
+          const options = {};
+          allAnswers.forEach((answer, index) => {
+              options[answer] = null;
+          });
+          console.log("asking", this.scene.textures.getTextureKeys())
+          this.scene.scene.setVisible(false,this.scene.key)
+          this.scene.time.delayedCall(2000, () => {
+            if (!this.triviaActive) return;
+            this.scene.scene.stop('MenuScene')
+            this.scene.physics.world.isPaused = false;
+            this.scene.isPaused = false;
+            this.takeDamage(15);
+            this.scene.scene.setVisible(true,this.scene.key)
+          });
+          this.scene.scene.launch('MenuScene', {
+              prompt: trivia.question,
+              options: options,
+              callback: (selectedAnswer) => {
+                  setTimeout(() => {
+                      this.scene.scene.stop('MenuScene');
+                      console.log(this.scene.textures.getTextureKeys());
+                
+                      this.triviaActive = false;
+                      if (selectedAnswer === trivia.correctAnswer) {
+                        console.log('Correct! You cast your spell.');
+                        this.hasTriviaPower = true;
+                        console.log("cq", currentQuestion);
+                      } else {
+                        console.log('Wrong answer!');
+                        this.takeDamage(15);
+                      }
+                      this.scene.physics.world.isPaused = false;
+                      this.scene.isPaused = false;
+                      this.scene.scene.setVisible(true,this.scene.key)
+                    }, 10);
+              }
+          });
         });
-        console.log("asking", this.scene.textures.getTextureKeys())
-
-        this.scene.scene.launch('MenuScene', {
-            prompt: trivia.question,
-            options: options,
-            callback: (selectedAnswer) => {
-                setTimeout(() => {
-                    this.scene.scene.stop('MenuScene');
-                    console.log(this.scene.textures.getTextureKeys());
-              
-                    this.triviaActive = false;
-                    if (selectedAnswer === trivia.correctAnswer) {
-                      console.log('Correct! You cast your spell.');
-                      this.hasTriviaPower = true;
-                      console.log("cq", currentQuestion);
-                    } else {
-                      console.log('Wrong answer!');
-                    }
-                  }, 10);
-            }
-        });
+        
     });
   
     this.scene.input.on('pointerdown', pointer => {
         if (this.hasTriviaPower) {
             const nearbyEnemies = this.scene.enemies.filter(e =>
-                Phaser.Math.Distance.Between(pointer.x, pointer.y, e.x, e.y) < 300
+                Phaser.Math.Distance.Between(pointer.x, pointer.y, e.x, e.y) < 100
               );
               if (nearbyEnemies.length > 0) {
                 nearbyEnemies.forEach(e => e.takeDamage(150));
@@ -173,37 +209,68 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setVelocity(0, 0); // stays stationary
   
     this.scene.input.keyboard.on('keydown-E', () => {
-      if (this.rhythmStarted) return;
+      if (this.rhythmStarted || this.playedRhythm) return;
   
       this.rhythmStarted = true;
+      this.playedRhythm = true;
   
       // Pause enemy movement
       this.scene.physics.world.isPaused = true;
       this.scene.isPaused = true;
+
+      console.log("started")
   
       this.scene.scene.launch('RhythmGameScene', {
-        onComplete: (score) => {
+        onComplete: (score, hits, misses) => {
+          this.rhythmStarted = false;
+          const thresholds = {
+            "ballBattle": 95,
+            "snakeBattle": 96,
+            "revengeTigerBattle": 97,
+            "squirrelBattle": 98,
+            "boss": 99,
+          };
+          
+          const threshold = thresholds[this.scene.levelKey]; // e.g., 'level1'
+          const accuracy = (hits/(hits+misses)) * 100;
+          console.log(accuracy)
+          
+          if (accuracy >= threshold) {
+            // Deal damage based on score
+            this.scene.enemies.sort((a, b) => {
+              const distA = Phaser.Math.Distance.Between(this.x, this.y, a.x, a.y);
+              const distB = Phaser.Math.Distance.Between(this.x, this.y, b.x, b.y);
+              return distA - distB;
+            });
+            console.log(score)
+              var remainingDmg = score;
+              this.scene.enemies.forEach(e => {
+                  console.log(e.hp)
+                  if (remainingDmg==0) return;
+                  const allocatedDmg = Math.min(remainingDmg,e.hp);
+                  console.log(remainingDmg)
+                  remainingDmg -= allocatedDmg;
+                  e.takeDamage(allocatedDmg);
+                  console.log("dealing", e, allocatedDmg, remainingDmg)
+              });
+          } else {
+            // Kill the player
+            this.scene.scene.stop('RhythmGameScene'); 
+            this.scene.scene.stop('CombatScene');
+            this.die();
+            this.scene.scene.start('StoryScene', {
+              text: ["You performed too poorly on the rhythm game."],
+              onComplete: () => {
+                this.scene.scene.stop('StoryScene');
+                this.scene.scene.get('GameScene').loadStep("combatDeath");
+              }
+            });
+            return;
+          }
           this.scene.physics.world.isPaused = false;
           this.scene.isPaused = false;
-          this.rhythmStarted = false;
 
-          this.scene.scene.stop('RhythmGameScene');
-          this.scene.enemies.sort((a, b) => {
-            const distA = Phaser.Math.Distance.Between(this.x, this.y, a.x, a.y);
-            const distB = Phaser.Math.Distance.Between(this.x, this.y, b.x, b.y);
-            return distA - distB;
-          });
-          console.log(score)
-            var remainingDmg = score;
-            this.scene.enemies.forEach(e => {
-                console.log(e.hp)
-                if (remainingDmg==0) return;
-                const allocatedDmg = Math.min(remainingDmg,e.hp);
-                console.log(remainingDmg)
-                remainingDmg -= allocatedDmg;
-                e.takeDamage(allocatedDmg);
-                console.log("dealing", e, allocatedDmg, remainingDmg)
-            }); 
+          this.scene.scene.stop('RhythmGameScene'); 
         }
       });
     });
@@ -215,5 +282,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       [answers[i], answers[j]] = [answers[j], answers[i]]; // Swap elements
     }
     return answers;
+  }
+  update(time,delta) {
+    if (this.healthText) {
+      this.healthText.setPosition(this.x, this.y - 50);
+    }
   }
 }

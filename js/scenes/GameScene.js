@@ -56,6 +56,7 @@ export default class GameScene extends Phaser.Scene {
       console.log(step.text)
       this.scene.start('StoryScene', {
         text: step.text,
+        pt: this.player.classType,
         onComplete: () => {
           this.scene.stop('StoryScene');
           if (step.next) this.loadStep(step.next);
@@ -75,6 +76,7 @@ export default class GameScene extends Phaser.Scene {
         prompt: step.prompt,
         options: step.options,
         descriptions: step.descriptions || {},
+        pt: this.player.classType,
         callback: (choice) => {
           this.scene.stop('MenuScene');
           console.log(choice, stepKey)
@@ -93,11 +95,29 @@ export default class GameScene extends Phaser.Scene {
         levelKey: step.levelKey,
         onVictory: () => {
           this.scene.stop('CombatScene')
+          this.scene.stop('MenuScene')
           if (step.next) this.loadStep(step.next);
         },
         onDefeat: () => {
           this.scene.stop('CombatScene')
-          this.loadStep('combatDeath');
+          this.scene.stop('MenuScene')
+          if (stepKey=="4.7") this.loadStep("4.7");
+          else this.loadStep('combatDeath');
+        }
+      });
+    } else if (step.type === 'boss') {
+      this.scene.start('BossScene', {
+        player: this.player,
+        onVictory: () => {
+          this.scene.stop('BossScene')
+          this.scene.stop('MenuScene')
+          if (step.next) this.loadStep(step.next);
+        },
+        onDefeat: () => {
+          this.scene.stop('BossScene')
+          this.scene.stop('MenuScene')
+          if (stepKey=="4.7") this.loadStep("4.7");
+          else this.loadStep('combatDeath');
         }
       });
     }

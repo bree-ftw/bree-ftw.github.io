@@ -98,7 +98,6 @@ export default class CombatScene extends Phaser.Scene {
 
     this.player.enemies = this.enemies;
     this.player.scene = this;
-    this.player.die = () => this.onDefeat();
 
     this.player.create?.();
     this.player.enterCombat(this.triviaData);
