@@ -378,13 +378,17 @@
       "type": "menu",
       "prompt": "What do you want to do?",
       "options": {
-        "Surrender to my awesomeness": "deathScene",
-        "Fight me!": "5.3",
+        "Scream \"surrender to my awesomeness\"": "5.2'",
+        "Fight him": "5.3",
         "Run away screaming": "deathScene"
-      },
-      "descriptions":{
-        "Fight me!":"The only rule is that there are no rules, even though the rule is a rule which contradicts meaning we should ignore it so there are essentially no rules except for the one that isn’t true."
       }
+    },
+    "5.2'": {
+      "type": "story",
+      "text": [
+        "\"NEVER!!\" he yells, and attacks you."
+      ],
+      "next": "5.4"
     },
     "5.3": {
       "type": "story",
@@ -421,19 +425,56 @@
         "Run away screaming": "congratulations"
       }
     },
+    "5.7'": {
+      "type": "menu",
+      "prompt": "What do you do?",
+      "options": {
+        "Play dead": "5.9'",
+        "Run away screaming": "congratulations"
+      }
+    },
+    "5.7''": {
+      "type": "menu",
+      "prompt": "What do you do?",
+      "options": {
+        "Talk about how you wouldn’t be here if it wasn’t for your family": "5.8'",
+        "Run away screaming": "congratulations"
+      }
+    },
+    "5.7'''": {
+      "type": "menu",
+      "prompt": "What do you do?",
+      "options": {
+        "Run away screaming": "congratulations"
+      }
+    },
     "5.8": {
       "type": "story",
       "text": [
         "It works for a bit, but then the paparazzi mob you."
       ],
-      "next": "deathScene"
+      "next": "5.7''"
+    },
+    "5.8'": {
+      "type": "story",
+      "text": [
+        "It works for a bit, but then the paparazzi mob you."
+      ],
+      "next": "5.7'''"
     },
     "5.9": {
       "type": "story",
       "text": [
         "You unfortunately can’t hide your breathing and they find out you are faking it."
       ],
-      "next": "deathScene"
+      "next": "5.7'"
+    },
+    "5.9'": {
+      "type": "story",
+      "text": [
+        "You unfortunately can’t hide your breathing and they find out you are faking it."
+      ],
+      "next": "5.7'''"
     },
     "congratulations": {
       "type": "story",
