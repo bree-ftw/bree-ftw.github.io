@@ -155,7 +155,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
           });
           console.log("asking", this.scene.textures.getTextureKeys())
           this.scene.scene.setVisible(false,this.scene.key)
-          this.scene.time.delayedCall(2000, () => {
+          this.scene.time.delayedCall(5000, () => {
             if (!this.triviaActive) return;
             this.triviaActive = false;
             this.scene.scene.stop('MenuScene')
