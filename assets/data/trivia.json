@@ -5,39 +5,9 @@
     "wrongAnswers": ["-sin(x)", "-cos(x)", "tan(x)"]
   },
   {
-    "question": "What is the determinant of the matrix [[1, 2], [3, 4]]?",
-    "correctAnswer": "-2",
-    "wrongAnswers": ["2", "10", "0"]
-  },
-  {
     "question": "What is the integral of 1/x dx?",
     "correctAnswer": "ln|x| + C",
     "wrongAnswers": ["1/x + C", "x^2/2 + C", "e^x + C"]
-  },
-  {
-    "question": "Which of the following is *not* a solution to the differential equation y' = y?",
-    "correctAnswer": "y = x^2",
-    "wrongAnswers": ["y = e^x", "y = 3e^x", "y = -e^x"]
-  },
-  {
-    "question": "What is the curl of the vector field F = ⟨y, -x, 0⟩?",
-    "correctAnswer": "⟨0, 0, -2⟩",
-    "wrongAnswers": ["⟨0, 0, 2⟩", "⟨2, 0, 0⟩", "⟨0, 2, 0⟩"]
-  },
-  {
-    "question": "Which of the following is *not* an eigenvalue of the matrix [[2, 0], [0, 3]]?",
-    "correctAnswer": "1",
-    "wrongAnswers": ["2", "3", "None of the above"]
-  },
-  {
-    "question": "What is the partial derivative ∂f/∂x of f(x, y) = x^2y + y^3?",
-    "correctAnswer": "2xy",
-    "wrongAnswers": ["x^2", "3y^2", "2y"]
-  },
-  {
-    "question": "What type of hybridization does the carbon atom in methane (CH₄) exhibit?",
-    "correctAnswer": "sp³",
-    "wrongAnswers": ["sp", "sp²", "dsp³"]
   },
   {
     "question": "Which law relates the voltage, current, and resistance in an electric circuit?",
@@ -48,5 +18,76 @@
     "question": "Which of the following particles has the least mass?",
     "correctAnswer": "Electron",
     "wrongAnswers": ["Proton", "Neutron", "Alpha particle"]
-  }
+  },
+    {
+      "question": "Who wrote The Chronicles of Narnia?",
+      "correctAnswer": "C.S. Lewis",
+      "wrongAnswers": ["J.R.R. Tolkien", "Roald Dahl", "Philip Pullman"]
+    },
+    {
+      "question": "Who wrote The Lord of the Rings?",
+      "correctAnswer": "J.R.R. Tolkien",
+      "wrongAnswers": ["C.S. Lewis", "George R.R. Martin", "Terry Pratchett"]
+    },
+    {
+      "question": "What language family does English belong to?",
+      "correctAnswer": "Germanic",
+      "wrongAnswers": ["Romance", "Slavic", "Celtic"]
+    },
+    {
+      "question": "Who wrote Taming of the Shrew?",
+      "correctAnswer": "William Shakespeare",
+      "wrongAnswers": ["Jane Austen", "Christopher Marlowe", "Ben Jonson"]
+    },
+    {
+      "question": "Approximately how many words are in the English language?",
+      "correctAnswer": "200,000",
+      "wrongAnswers": ["50,000", "500,000", "1 million"]
+    },
+
+    {
+      "question": "What state of matter has definite volume but not shape?",
+      "correctAnswer": "Liquid",
+      "wrongAnswers": ["Solid", "Gas", "Plasma"]
+    },
+    {
+      "question": "What type of bond involves sharing electrons?",
+      "correctAnswer": "Covalent",
+      "wrongAnswers": ["Ionic", "Metallic", "Hydrogen"]
+    },
+    {
+      "question": "Who developed the theory of general relativity?",
+      "correctAnswer": "Albert Einstein",
+      "wrongAnswers": ["Isaac Newton", "Niels Bohr", "Galileo Galilei"]
+    },
+    {
+      "question": "What is the charge of a proton?",
+      "correctAnswer": "Positive",
+      "wrongAnswers": ["Negative", "Neutral", "It depends"]
+    },
+    {
+      "question": "What is the value of pi (π) to two decimal places?",
+      "correctAnswer": "3.14",
+      "wrongAnswers": ["3.41", "3.10", "3.04"]
+    },
+    {
+      "question": "How many sides does a dodecagon have?",
+      "correctAnswer": "12",
+      "wrongAnswers": ["10", "11", "13"]
+    },
+    {
+      "question": "What is 19 squared?",
+      "correctAnswer": "361",
+      "wrongAnswers": ["381", "351", "391"]
+    },
+    {
+      "question": "Which mathematician is credited with the Pythagorean Theorem?",
+      "correctAnswer": "Pythagoras",
+      "wrongAnswers": ["Euclid", "Archimedes", "Descartes"]
+    },
+    {
+      "question": "In Old English, what number did the word 'hundrath' represent?",
+      "correctAnswer": "120",
+      "wrongAnswers": ["100", "60", "110"]
+    }
 ]

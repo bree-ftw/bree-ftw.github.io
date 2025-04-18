@@ -60,7 +60,7 @@ export default class BossScene extends Phaser.Scene {
     // Projectiles
     this.projectiles = this.physics.add.group();
     this.projectileTimer = this.time.addEvent({
-      delay: 1000,
+      delay: 750,
       callback: this.shootProjectile,
       callbackScope: this,
       loop: true
@@ -97,6 +97,6 @@ export default class BossScene extends Phaser.Scene {
 
   shootProjectile() {
     const proj = this.projectiles.create(this.fuzzy.x, this.fuzzy.y, 'projectile').setDisplaySize(30, 30);
-    this.physics.moveToObject(proj, this.player, 500);
+    this.physics.moveToObject(proj, this.player, 600);
   }
 }

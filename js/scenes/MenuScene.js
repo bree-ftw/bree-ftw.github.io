@@ -18,7 +18,8 @@ export default class MenuScene extends Phaser.Scene {
   
       this.add.text(centerX, 100, this.prompt, {
         fontSize: '24px',
-        color: '#ffffff'
+        color: '#ffffff',
+        wordWrap: { width: 500, useAdvancedWrap: true }
       }).setOrigin(0.5);
   
       const optionKeys = Object.keys(this.options);

@@ -16,6 +16,7 @@ export default class RhythmGameScene extends Phaser.Scene {
     this.load.image('arrowDown', 'assets/images/down.png');
     this.load.image('arrowRight', 'assets/images/right.png');
     this.load.audio('op19no6', 'assets/audio/op19no6.mp3');
+    this.load.audio('toccatina', 'assets/audio/toccatina.mp3');
   }
 
   create() {
@@ -23,7 +24,7 @@ export default class RhythmGameScene extends Phaser.Scene {
     this.notes = [];
     this.misses = 0;
     this.isPlaying = true;
-    this.music = this.sound.add('op19no6');
+    this.music = this.sound.add('toccatina');
     console.log("startedr")
 
     const rhythmData = this.cache.json.get('rhythms')["3"];

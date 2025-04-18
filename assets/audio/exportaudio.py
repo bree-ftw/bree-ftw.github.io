@@ -5,8 +5,8 @@ TPQN = 480  # Ticks per quarter note
 MIN_INTERVAL_MS = 150  # Ignore notes closer than this
 MAX_BPM = 180  # Cap for overly fast tempos (not used anymore)
 KEY_SEQUENCE = ['A', 'S', 'D', 'W']
-MIDI_CSV_PATH = "/Users/vinayak/Library/Mobile Documents/com~apple~CloudDocs/OHS/Clubs:Circles/digital storytelling competition/bree-ftw.github.io/assets/audio/op19no6.csv"
-OUTPUT_PATH = "./o196.json"
+MIDI_CSV_PATH = "/Users/vinayak/Library/Mobile Documents/com~apple~CloudDocs/OHS/Clubs:Circles/digital storytelling competition/bree-ftw.github.io/assets/audio/toccatina.csv"
+OUTPUT_PATH = "./toccatina.json"
 
 # Read MIDI CSV and extract events
 tempo_changes = []
@@ -114,27 +114,38 @@ for event in filtered:
 assigned_rhythms = []
 last_time = None
 key_index = 0
+last_pitch = None
+last_key = None
 
 for event in final_filtered:
     time = int(event["time"])
-    if last_time is None:
-        interval = float('inf')
-    else:
-        interval = time - last_time
+    pitch = event["note"]
 
-    if interval < 200:
-        key_index = (key_index + 1) % len(KEY_SEQUENCE)
-    elif interval < 500:
-        key_index = (key_index + 1) % 3
+    if pitch == last_pitch:
+        key = last_key
     else:
-        key_index = 0
+        if last_time is None:
+            interval = float('inf')
+        else:
+            interval = time - last_time
+
+        if interval < 200:
+            key_index = (key_index + 1) % len(KEY_SEQUENCE)
+        elif interval < 500:
+            key_index = (key_index + 1) % 3
+        else:
+            key_index = 0
+
+        key = KEY_SEQUENCE[key_index]
 
     assigned_rhythms.append({
         "time": time,
-        "note": KEY_SEQUENCE[key_index]
+        "note": key
     })
 
     last_time = time
+    last_pitch = pitch
+    last_key = key
 
 # Export to JSON
 rhythm_json = { "rhythms": assigned_rhythms }

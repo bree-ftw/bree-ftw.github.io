@@ -34,6 +34,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.attackPower = 50;
         this.setTexture('barbarian');
         this.classType = "Barbarian";
+        if (this.healthText) {
+          this.healthText.setText(`HP: ${this.hp}`);
+        }
         break;
       case "Bard":
         this.hp = 100;
@@ -45,6 +48,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       case "Wizard":
         this.hp = 75;
         this.maxHp = 75;
+        if (this.healthText) {
+          this.healthText.setText(`HP: ${this.hp}`);
+        }
         this.attackPower = 10;
         this.triviaActive=false;
         this.currentQuestion=0
@@ -53,6 +59,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         break;
       default:
         break;
+      
     }
   }
 
@@ -127,12 +134,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.input.keyboard.on('keyup-A', () => this.setVelocityX(0));
     this.scene.input.keyboard.on('keyup-D', () => this.setVelocityX(0));
     this.hasTriviaPower = false;
+    this.triviaActive = false;
   
     this.scene.input.keyboard.on('keydown-E', () => {
         this.scene.input.keyboard.on('keyup-E', () => {
+          if (this.triviaActive || !triviaData || triviaData.length === 0) return;
           this.scene.physics.world.isPaused = true;
           this.scene.isPaused = true;
-          if (this.triviaActive || !triviaData || triviaData.length === 0) return;
+          this.triviaActive = true;
           const currentQuestion = Math.floor(Math.random() * triviaData.length);
           const trivia = triviaData[currentQuestion];
           if (!trivia) return; // avoid accessing undefined question
@@ -148,6 +157,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
           this.scene.scene.setVisible(false,this.scene.key)
           this.scene.time.delayedCall(2000, () => {
             if (!this.triviaActive) return;
+            this.triviaActive = false;
             this.scene.scene.stop('MenuScene')
             this.scene.physics.world.isPaused = false;
             this.scene.isPaused = false;
