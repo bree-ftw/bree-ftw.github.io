@@ -61,6 +61,15 @@
       ],
       "next": "1.6"
     },
+    "1.6'": {
+      "type": "story",
+      "text": [
+        "\"YOU DARE DEFY ME???\"",
+        "\"DIEEEEEE!!!\"",
+        "Fuzzy McFuzzface sprints away from the house, as you attempt to pursue him, a little rubber ball rolls in front of you."
+      ],
+      "next": "1.6"
+    },
     "1.6": {
       "type": "story",
       "text": [
@@ -74,8 +83,8 @@
       "type": "menu",
       "prompt": "How do you respond?",
       "options": {
-        "\"NAUR!\"": "1.6",
-        "\"I'll pass, thanks for the offer\"": "1.6",
+        "\"NAUR!\"": "1.6'",
+        "\"I'll pass, thanks for the offer\"": "1.6'",
         "\"Aye aye, captain!\"": "deathScene"
       }
     },
@@ -123,10 +132,17 @@
       "type": "menu",
       "prompt": "What do you do?",
       "options": {
-        "Poke it with a stick": "2.3",
+        "Poke it with a stick": "2.3'",
         "Do nothing and continue on your way": "2.4",
         "Run away screaming": "2.5"
       }
+    },
+    "2.3'": {
+      "type": "story",
+      "text": [
+        "The snake attacks!"
+      ],
+      "next": "2.3"
     },
     "2.3": {
       "type": "combat",
@@ -154,6 +170,7 @@
     "2.6": {
       "type": "story",
       "text": [
+        "After defeating the mighty rope snake, you continue your adventure through the jungle.",
         "You find a clearing where the magical energy pulses stronger.",
         "The trail continues deeper into the woods..."
       ],
@@ -162,7 +179,6 @@
     "3.1": {
       "type": "story",
       "text": [
-        "After defeating the mighty rope snake, you continue your adventure through the jungle.",
         "You hear something behind you.",
         "A tiger is stalking you, but something is unusual about it.",
         "It has gashes across its whole body, its eyes are gouged out, and its blood is… white?",
@@ -200,6 +216,15 @@
       "options": {
         "Yea that does sound like me, we cool now?": "3.6",
         "IT WASN’T ME IT WAS THE 2ND COUSIN THRICE REMOVED": "3.6",
+        "Run away screaming": "3.8"
+      }
+    },
+    "3.5'": {
+      "type": "menu",
+      "prompt": "What's your next move?",
+      "options": {
+        "Yea that does sound like me, we cool now?": "3.6",
+        "Are you talking to ME or the bush??": "3.6",
         "Run away screaming": "3.8"
       }
     },
@@ -487,6 +512,7 @@
     "creditScene": {
         "type":"story",
         "text":[
+          "",
             "CREDITS:\nProgramming: Vinayak Vikram\nStory: Avinash Kumar, Angela Wang\nArtwork: Jill Fulton",
             "and most importantly, the most amazing, best, adorable dog in the world...",
             "Breehy-hinny-brinny-hooey-hah! (or bree/breebo for short)",

@@ -60,7 +60,7 @@ export default class BossScene extends Phaser.Scene {
     // Projectiles
     this.projectiles = this.physics.add.group();
     this.projectileTimer = this.time.addEvent({
-      delay: 750,
+      delay: 900,
       callback: this.shootProjectile,
       callbackScope: this,
       loop: true

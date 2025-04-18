@@ -197,7 +197,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 Phaser.Math.Distance.Between(pointer.x, pointer.y, e.x, e.y) < 100
               );
               if (nearbyEnemies.length > 0) {
-                nearbyEnemies.forEach(e => e.takeDamage(150));
+                nearbyEnemies.forEach(e => e.takeDamage(100));
                 this.hasTriviaPower = false; // clear after use
               }           
               console.log("Spell cast on", nearbyEnemies.length, "enemies", this.scene.enemies);

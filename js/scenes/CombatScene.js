@@ -32,6 +32,7 @@ export default class CombatScene extends Phaser.Scene {
   }
 
   create() {
+    this.input.keyboard.on('keydown-X', () => { this.onVictory(); });
 
     this.player = new Player(this, this.scale.width / 2, this.scale.height / 2);
 
