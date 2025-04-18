@@ -41,9 +41,8 @@ export default class StoryScene extends Phaser.Scene {
       if (entry.startsWith('img:')) {
         const imgKey = entry.split(':')[1];
         this.displayedItem = this.add.image(this.scale.width / 2, this.scale.height / 2, imgKey)
-          .setAlpha(0)
           .setOrigin(0.5)
-          this.displayedItem.displayWidth = 200;       // Set the width to 200 pixels
+          this.displayedItem.displayWidth = 500;       // Set the width to 200 pixels
           this.displayedItem.scaleY = this.displayedItem.scaleX;
       } else {
         const weaponsDict = {"Barbarian":"Sword","Wizard":"Wand","Bard":"Guitar"}
@@ -53,14 +52,8 @@ export default class StoryScene extends Phaser.Scene {
           color: '#ffffff',
           wordWrap: { width: this.scale.width - 100 },
           align: 'center',
-        }).setOrigin(0.5).setAlpha(0);
+        }).setOrigin(0.5);
       }
-  
-      this.tweens.add({
-        targets: this.displayedItem,
-        alpha: 1,
-        duration: 500
-      });
     }
   
     advanceStory() {

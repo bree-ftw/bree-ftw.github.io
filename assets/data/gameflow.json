@@ -418,7 +418,9 @@
     "5.3": {
       "type": "story",
       "text": [
-        "You challenge Fuzzy McFuzzface to a fight with no rules. He accepts with a smirk."
+        "You challenge Fuzzy McFuzzface to a fight.",
+        "The only rule is that there are no rules, even though the rule is a rule which contradicts meaning we should ignore it so there are essentially no rules except for the one that isn’t true.",
+        "He accepts it with a smirk..."
       ],
       "next": "5.4"
     },
@@ -512,7 +514,6 @@
     "creditScene": {
         "type":"story",
         "text":[
-          "",
             "CREDITS:\nProgramming: Vinayak Vikram\nStory: Avinash Kumar, Angela Wang\nArtwork: Jill Fulton",
             "and most importantly, the most amazing, best, adorable dog in the world...",
             "Breehy-hinny-brinny-hooey-hah! (or bree/breebo for short)",

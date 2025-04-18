@@ -27,7 +27,7 @@ export default class BossScene extends Phaser.Scene {
 
   create() {
     // Set up player
-    this.player = new Player(this, this.scale.width / 2, this.scale.height - 100);
+    this.player = new Player(this, this.scale.width / 2, this.scale.height - 100, this.scene);
     this.player.setType(this.playerType);
     this.player.scene = this;
     this.player.die = () => this.onDefeat();

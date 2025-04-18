@@ -1,7 +1,7 @@
 // src/characters/Player.js
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, texture = 'breebo') {
+  constructor(scene, x, y, gs, texture = 'breebo') {
     super(scene, x, y, texture);
 
     scene.add.existing(this).setDisplaySize(60,95);
@@ -22,6 +22,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       strokeThickness: 3
     }).setOrigin(0.5);
     this.playedRhythm = false;
+    this.gs = gs;
   }
 
   setType(type) {
@@ -154,22 +155,22 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
               options[answer] = null;
           });
           console.log("asking", this.scene.textures.getTextureKeys())
-          this.scene.scene.setVisible(false,this.scene.key)
+          this.gs.setVisible(false,this.scene.key)
           this.scene.time.delayedCall(5000, () => {
             if (!this.triviaActive) return;
             this.triviaActive = false;
-            this.scene.scene.stop('MenuScene')
+            this.gs.stop('MenuScene')
             this.scene.physics.world.isPaused = false;
             this.scene.isPaused = false;
             this.takeDamage(15);
-            this.scene.scene.setVisible(true,this.scene.key)
+            this.gs.setVisible(true,this.scene.key)
           });
-          this.scene.scene.launch('MenuScene', {
+          this.gs.launch('MenuScene', {
               prompt: trivia.question,
               options: options,
               callback: (selectedAnswer) => {
                   setTimeout(() => {
-                      this.scene.scene.stop('MenuScene');
+                      this.gs.stop('MenuScene');
                       console.log(this.scene.textures.getTextureKeys());
                 
                       this.triviaActive = false;
@@ -183,7 +184,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                       }
                       this.scene.physics.world.isPaused = false;
                       this.scene.isPaused = false;
-                      this.scene.scene.setVisible(true,this.scene.key)
+                      this.gs.setVisible(true,this.scene.key)
                     }, 10);
               }
           });
@@ -230,22 +231,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
       console.log("started")
   
-      this.scene.scene.launch('RhythmGameScene', {
+      this.gs.launch('RhythmGameScene', {
+        mf: () => {
+          this.bardMiss(); 
+        },
+        hp: this.hp,
         onComplete: (score, hits, misses) => {
           this.rhythmStarted = false;
-          const thresholds = {
-            "ballBattle": 95,
-            "snakeBattle": 96,
-            "revengeTigerBattle": 97,
-            "squirrelBattle": 98,
-            "boss": 99,
-          };
-          
-          const threshold = thresholds[this.scene.levelKey]; // e.g., 'level1'
           const accuracy = (hits/(hits+misses)) * 100;
           console.log(accuracy)
           
-          if (accuracy >= threshold) {
             // Deal damage based on score
             this.scene.enemies.sort((a, b) => {
               const distA = Phaser.Math.Distance.Between(this.x, this.y, a.x, a.y);
@@ -263,28 +258,35 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                   e.takeDamage(allocatedDmg);
                   console.log("dealing", e, allocatedDmg, remainingDmg)
               });
-          } else {
-            // Kill the player
-            this.scene.scene.stop('RhythmGameScene'); 
-            this.scene.scene.stop('CombatScene');
-            this.die();
-            this.scene.scene.start('StoryScene', {
-              text: ["You performed too poorly on the rhythm game."],
-              onComplete: () => {
-                this.scene.scene.stop('StoryScene');
-                this.scene.scene.get('GameScene').loadStep("combatDeath");
-              }
-            });
-            return;
-          }
           this.scene.physics.world.isPaused = false;
           this.scene.isPaused = false;
 
-          this.scene.scene.stop('RhythmGameScene'); 
+          this.gs.stop('RhythmGameScene'); 
         }
       });
     });
   }      
+
+  bardMiss() {
+    const hks = {"ballBattle":5,"snakeBattle":8,"revengeTigerBattle":10,"squirrelBattle":15,"boss":20}
+    this.hp-=hks[this.scene.levelKey];
+    console.log(this.scene.levelKey, this.hp)
+    if (this.hp <= 0) {
+      // Kill the player
+      this.gs.stop('RhythmGameScene'); 
+      this.gs.stop('CombatScene');
+      this.die();
+      this.gs.start('StoryScene', {
+        text: ["You died."],
+        onComplete: () => {
+          this.gs.stop('StoryScene');
+          this.gs.get('GameScene').loadStep("combatDeath");
+        }
+      });
+      return;
+    }
+    return (this.hp);
+  }
   shuffleAnswers(answers) {
     // Shuffle the answers array to randomize the order
     for (let i = answers.length - 1; i > 0; i--) {

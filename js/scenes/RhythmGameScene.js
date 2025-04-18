@@ -7,6 +7,14 @@ export default class RhythmGameScene extends Phaser.Scene {
     this.onComplete = data.onComplete || (() => {});
     this.hits=0;
     this.misses=0;
+    this.mf = data.mf;
+    this.hp = data.hp
+    this.healthText = this.add.text(20, 20, `HP: ${this.hp}`, {
+      fontSize: '18px',
+      fill: '#fff',
+      stroke: '#000',
+      strokeThickness: 3
+    }).setOrigin(0.5);
   }
 
   preload() {
@@ -114,6 +122,10 @@ export default class RhythmGameScene extends Phaser.Scene {
       this.showFeedback('Miss!', '#f00');
       this.score -= 10;
       this.misses++;
+      this.hp = this.mf();
+      if (this.healthText) {
+        this.healthText.setText(`HP: ${this.hp}`);
+      }
     }
   }
 
@@ -150,7 +162,7 @@ export default class RhythmGameScene extends Phaser.Scene {
       this.isPlaying = false;
       this.showScore();
     }
-    if (this.misses > 15 && this.isPlaying) {
+    if (this.misses > 100 && this.isPlaying) {
       this.isPlaying = false;
       this.showScore();
     }
