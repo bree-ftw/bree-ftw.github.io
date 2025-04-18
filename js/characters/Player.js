@@ -156,7 +156,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
           });
           console.log("asking", this.scene.textures.getTextureKeys())
           this.gs.setVisible(false,this.scene.key)
-          this.scene.time.delayedCall(5000, () => {
+          this.dc=this.scene.time.delayedCall(5000, () => {
             if (!this.triviaActive) return;
             this.triviaActive = false;
             this.gs.stop('MenuScene')
@@ -184,6 +184,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                       }
                       this.scene.physics.world.isPaused = false;
                       this.scene.isPaused = false;
+                      this.dc.remove();
                       this.gs.setVisible(true,this.scene.key)
                     }, 10);
               }
@@ -215,7 +216,34 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     });
   }
-
+  bardMiss() {
+    const hks = {"ballBattle":5,"snakeBattle":8,"revengeTigerBattle":10,"squirrelBattle":15,"boss":20}
+    this.hp-=hks[this.scene.levelKey];
+    console.log(this.scene.levelKey, this.hp)
+    if (this.hp <= 0) {
+      // Kill the player
+      this.gs.stop('RhythmGameScene'); 
+      this.gs.stop('CombatScene');
+      this.die();
+      this.gs.start('StoryScene', {
+        text: ["You died."],
+        onComplete: () => {
+          this.gs.stop('StoryScene');
+          this.gs.get('GameScene').loadStep("combatDeath");
+        }
+      });
+      return;
+    }
+    return (this.hp);
+  }
+  shuffleAnswers(answers) {
+    // Shuffle the answers array to randomize the order
+    for (let i = answers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [answers[i], answers[j]] = [answers[j], answers[i]]; // Swap elements
+    }
+    return answers;
+  }
   enableBardCombat() {
     this.setVelocity(0, 0); // stays stationary
   
@@ -233,7 +261,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   
       this.gs.launch('RhythmGameScene', {
         mf: () => {
-          this.bardMiss(); 
+          return this.bardMiss(); 
         },
         hp: this.hp,
         onComplete: (score, hits, misses) => {
@@ -265,39 +293,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
       });
     });
-  }      
-
-  bardMiss() {
-    const hks = {"ballBattle":5,"snakeBattle":8,"revengeTigerBattle":10,"squirrelBattle":15,"boss":20}
-    this.hp-=hks[this.scene.levelKey];
-    console.log(this.scene.levelKey, this.hp)
-    if (this.hp <= 0) {
-      // Kill the player
-      this.gs.stop('RhythmGameScene'); 
-      this.gs.stop('CombatScene');
-      this.die();
-      this.gs.start('StoryScene', {
-        text: ["You died."],
-        onComplete: () => {
-          this.gs.stop('StoryScene');
-          this.gs.get('GameScene').loadStep("combatDeath");
-        }
-      });
-      return;
-    }
-    return (this.hp);
-  }
-  shuffleAnswers(answers) {
-    // Shuffle the answers array to randomize the order
-    for (let i = answers.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [answers[i], answers[j]] = [answers[j], answers[i]]; // Swap elements
-    }
-    return answers;
-  }
+  }     
+  
   update(time,delta) {
     if (this.healthText) {
       this.healthText.setPosition(this.x, this.y - 50);
     }
-  }
+  } 
 }

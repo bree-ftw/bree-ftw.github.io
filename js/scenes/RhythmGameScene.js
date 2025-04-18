@@ -75,8 +75,8 @@ export default class RhythmGameScene extends Phaser.Scene {
       note.noteKey = data.note;
       note.arrow = arrow;
       note.hit = false;
-      note.time = data.time; // The spawn time
-      note.fallDuration = 2000; // How long the note will take to fall to the bottom (in ms)
+      note.time = data.time;
+      note.fallDuration = 2000;
       this.notes.push(note);
     });
 
@@ -142,8 +142,8 @@ export default class RhythmGameScene extends Phaser.Scene {
     this.notes = this.notes.filter(note => {
       if (!note.active) return false;
 
-      const timeUntilHit = note.time - elapsed; // Time remaining until the note should hit the bottom
-      const progress = Math.max(0, 1 - (timeUntilHit / note.fallDuration)); // Progress of fall (from 0 to 1)
+      const timeUntilHit = note.time - elapsed; 
+      const progress = Math.max(0, 1 - (timeUntilHit / note.fallDuration)); 
       note.y = Phaser.Math.Linear(0, this.hitY, progress);
       note.arrow.y = note.y;
       note.setAlpha(1);
@@ -152,6 +152,13 @@ export default class RhythmGameScene extends Phaser.Scene {
       if (note.y > this.scale.height) {
         note.destroy();
         note.arrow.destroy();
+        this.showFeedback('Miss!', '#f00');
+      this.score -= 10;
+      this.misses++;
+      this.hp = this.mf();
+      if (this.healthText) {
+        this.healthText.setText(`HP: ${this.hp}`);
+      }
         return false;
       }
 

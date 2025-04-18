@@ -110,7 +110,6 @@ export default class CombatScene extends Phaser.Scene {
   update(time, delta) {
     if (this.isPaused) return;
 
-    // Activate up to 5 enemies at a time
     if (this.activeEnemies.length < 5 && time > this.lastAdvanceTime + 500) {
       const next = this.enemies.find(e => !this.activeEnemies.includes(e));
       if (next) {
