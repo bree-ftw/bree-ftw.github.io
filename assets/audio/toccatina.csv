@@ -723,6 +723,7 @@
 2, 0, Start_track
 2, 0, Title_t, "Piano"
 2, 0, Key_signature, 0, "major"
+2, 0, Tempo, 705882
 2, 0, MIDI_port, 0
 2, 0, Note_on_c, 0, 52, 80
 2, 239, Note_on_c, 0, 52, 0

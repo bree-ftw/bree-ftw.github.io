@@ -478,6 +478,7 @@
     "5.8": {
       "type": "story",
       "text": [
+        "img:paparazzi.jpg",
         "It works for a bit, but then the paparazzi mob you."
       ],
       "next": "5.7'"
@@ -485,6 +486,7 @@
     "5.8'": {
       "type": "story",
       "text": [
+        "img:paparazzi.jpg",
         "It works for a bit, but then the paparazzi mob you."
       ],
       "next": "5.7'''"
@@ -492,6 +494,7 @@
     "5.9": {
       "type": "story",
       "text": [
+        "img:playDead.png",
         "You unfortunately can’t hide your breathing and they find out you are faking it."
       ],
       "next": "5.7''"
@@ -499,6 +502,7 @@
     "5.9'": {
       "type": "story",
       "text": [
+        "img:playDead.png",
         "You unfortunately can’t hide your breathing and they find out you are faking it."
       ],
       "next": "5.7'''"
@@ -516,13 +520,14 @@
         "text":[
             "CREDITS:\nProgramming: Vinayak Vikram\nStory: Avinash Kumar, Angela Wang\nArtwork: Jill Fulton",
             "and most importantly, the most amazing, best, adorable dog in the world...",
-            "Breehy-hinny-brinny-hooey-hah! (or bree/breebo for short)",
+            "Breehy-hinny-brinny-hoohy-hah! (or bree/breebo for short)",
             "img:breebo_1.png",
             "img:breebo_2.png",
             "img:breebo_3.png",
             "img:breebo_4.png",
             "img:breebo_5.png",
             "img:breebo_6.png",
+            "img:breebo_7.png",
             "img:breebo_8.png"
         ]
     }

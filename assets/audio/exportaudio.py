@@ -4,9 +4,9 @@ import json
 TPQN = 480  # Ticks per quarter note
 MIN_INTERVAL_MS = 150  # Ignore notes closer than this
 MAX_BPM = 180  # Cap for overly fast tempos (not used anymore)
-KEY_SEQUENCE = ['A', 'S', 'D', 'W']
+KEY_SEQUENCE = ['A', 'W']
 MIDI_CSV_PATH = "/Users/vinayak/Library/Mobile Documents/com~apple~CloudDocs/OHS/Clubs:Circles/digital storytelling competition/bree-ftw.github.io/assets/audio/toccatina.csv"
-OUTPUT_PATH = "./toccatina.json"
+OUTPUT_PATH = "./toccatina2.json"
 
 # Read MIDI CSV and extract events
 tempo_changes = []
@@ -19,7 +19,7 @@ with open(MIDI_CSV_PATH, "r") as file:
         tick = int(parts[1])
         event_type = parts[2]
         
-        if track == 1:
+        if track == 2:
             if event_type == "Tempo":
                 # Tempo parsing corrected here
                 print("tempo")

@@ -1,0 +1,472 @@
+{
+  "rhythms": [
+    {
+      "time": 705,
+      "note": "S"
+    },
+    {
+      "time": 1058,
+      "note": "S"
+    },
+    {
+      "time": 1411,
+      "note": "D"
+    },
+    {
+      "time": 2117,
+      "note": "S"
+    },
+    {
+      "time": 2823,
+      "note": "S"
+    },
+    {
+      "time": 3529,
+      "note": "S"
+    },
+    {
+      "time": 3882,
+      "note": "S"
+    },
+    {
+      "time": 4235,
+      "note": "D"
+    },
+    {
+      "time": 4941,
+      "note": "S"
+    },
+    {
+      "time": 5647,
+      "note": "S"
+    },
+    {
+      "time": 6352,
+      "note": "S"
+    },
+    {
+      "time": 7058,
+      "note": "S"
+    },
+    {
+      "time": 7764,
+      "note": "S"
+    },
+    {
+      "time": 8470,
+      "note": "S"
+    },
+    {
+      "time": 9176,
+      "note": "S"
+    },
+    {
+      "time": 9529,
+      "note": "S"
+    },
+    {
+      "time": 9882,
+      "note": "D"
+    },
+    {
+      "time": 10588,
+      "note": "S"
+    },
+    {
+      "time": 10941,
+      "note": "S"
+    },
+    {
+      "time": 11294,
+      "note": "D"
+    },
+    {
+      "time": 11999,
+      "note": "S"
+    },
+    {
+      "time": 12352,
+      "note": "S"
+    },
+    {
+      "time": 12705,
+      "note": "D"
+    },
+    {
+      "time": 13411,
+      "note": "S"
+    },
+    {
+      "time": 13764,
+      "note": "S"
+    },
+    {
+      "time": 14117,
+      "note": "D"
+    },
+    {
+      "time": 14823,
+      "note": "S"
+    },
+    {
+      "time": 15529,
+      "note": "S"
+    },
+    {
+      "time": 16235,
+      "note": "S"
+    },
+    {
+      "time": 16941,
+      "note": "S"
+    },
+    {
+      "time": 17647,
+      "note": "S"
+    },
+    {
+      "time": 17999,
+      "note": "S"
+    },
+    {
+      "time": 18352,
+      "note": "D"
+    },
+    {
+      "time": 19058,
+      "note": "S"
+    },
+    {
+      "time": 19764,
+      "note": "S"
+    },
+    {
+      "time": 20470,
+      "note": "S"
+    },
+    {
+      "time": 20823,
+      "note": "S"
+    },
+    {
+      "time": 21176,
+      "note": "D"
+    },
+    {
+      "time": 21882,
+      "note": "S"
+    },
+    {
+      "time": 22588,
+      "note": "S"
+    },
+    {
+      "time": 23294,
+      "note": "S"
+    },
+    {
+      "time": 23999,
+      "note": "S"
+    },
+    {
+      "time": 24705,
+      "note": "S"
+    },
+    {
+      "time": 25411,
+      "note": "S"
+    },
+    {
+      "time": 26117,
+      "note": "S"
+    },
+    {
+      "time": 26470,
+      "note": "S"
+    },
+    {
+      "time": 26823,
+      "note": "D"
+    },
+    {
+      "time": 27529,
+      "note": "S"
+    },
+    {
+      "time": 27882,
+      "note": "S"
+    },
+    {
+      "time": 28235,
+      "note": "D"
+    },
+    {
+      "time": 28941,
+      "note": "S"
+    },
+    {
+      "time": 29294,
+      "note": "S"
+    },
+    {
+      "time": 29647,
+      "note": "D"
+    },
+    {
+      "time": 30352,
+      "note": "S"
+    },
+    {
+      "time": 30705,
+      "note": "S"
+    },
+    {
+      "time": 31058,
+      "note": "D"
+    },
+    {
+      "time": 31764,
+      "note": "S"
+    },
+    {
+      "time": 32470,
+      "note": "S"
+    },
+    {
+      "time": 33176,
+      "note": "S"
+    },
+    {
+      "time": 33882,
+      "note": "S"
+    },
+    {
+      "time": 34588,
+      "note": "S"
+    },
+    {
+      "time": 34941,
+      "note": "S"
+    },
+    {
+      "time": 35294,
+      "note": "D"
+    },
+    {
+      "time": 35999,
+      "note": "S"
+    },
+    {
+      "time": 36352,
+      "note": "S"
+    },
+    {
+      "time": 36705,
+      "note": "D"
+    },
+    {
+      "time": 37411,
+      "note": "S"
+    },
+    {
+      "time": 37764,
+      "note": "S"
+    },
+    {
+      "time": 38117,
+      "note": "D"
+    },
+    {
+      "time": 38823,
+      "note": "S"
+    },
+    {
+      "time": 39176,
+      "note": "S"
+    },
+    {
+      "time": 39529,
+      "note": "D"
+    },
+    {
+      "time": 40235,
+      "note": "S"
+    },
+    {
+      "time": 40588,
+      "note": "S"
+    },
+    {
+      "time": 40941,
+      "note": "D"
+    },
+    {
+      "time": 41647,
+      "note": "S"
+    },
+    {
+      "time": 41999,
+      "note": "S"
+    },
+    {
+      "time": 42352,
+      "note": "D"
+    },
+    {
+      "time": 43058,
+      "note": "S"
+    },
+    {
+      "time": 43764,
+      "note": "S"
+    },
+    {
+      "time": 44470,
+      "note": "S"
+    },
+    {
+      "time": 45176,
+      "note": "S"
+    },
+    {
+      "time": 45882,
+      "note": "S"
+    },
+    {
+      "time": 46588,
+      "note": "S"
+    },
+    {
+      "time": 47294,
+      "note": "S"
+    },
+    {
+      "time": 47999,
+      "note": "S"
+    },
+    {
+      "time": 48705,
+      "note": "S"
+    },
+    {
+      "time": 49058,
+      "note": "S"
+    },
+    {
+      "time": 49411,
+      "note": "D"
+    },
+    {
+      "time": 50117,
+      "note": "S"
+    },
+    {
+      "time": 50823,
+      "note": "S"
+    },
+    {
+      "time": 51529,
+      "note": "S"
+    },
+    {
+      "time": 51882,
+      "note": "S"
+    },
+    {
+      "time": 52235,
+      "note": "D"
+    },
+    {
+      "time": 52941,
+      "note": "S"
+    },
+    {
+      "time": 53647,
+      "note": "S"
+    },
+    {
+      "time": 54352,
+      "note": "S"
+    },
+    {
+      "time": 55058,
+      "note": "S"
+    },
+    {
+      "time": 55764,
+      "note": "S"
+    },
+    {
+      "time": 56470,
+      "note": "S"
+    },
+    {
+      "time": 57176,
+      "note": "S"
+    },
+    {
+      "time": 57882,
+      "note": "S"
+    },
+    {
+      "time": 58588,
+      "note": "S"
+    },
+    {
+      "time": 59294,
+      "note": "S"
+    },
+    {
+      "time": 59999,
+      "note": "S"
+    },
+    {
+      "time": 60352,
+      "note": "S"
+    },
+    {
+      "time": 60705,
+      "note": "D"
+    },
+    {
+      "time": 61411,
+      "note": "S"
+    },
+    {
+      "time": 61764,
+      "note": "S"
+    },
+    {
+      "time": 62117,
+      "note": "D"
+    },
+    {
+      "time": 62823,
+      "note": "S"
+    },
+    {
+      "time": 63529,
+      "note": "S"
+    },
+    {
+      "time": 64235,
+      "note": "S"
+    },
+    {
+      "time": 64941,
+      "note": "S"
+    },
+    {
+      "time": 65294,
+      "note": "D"
+    },
+    {
+      "time": 66705,
+      "note": "S"
+    },
+    {
+      "time": 68117,
+      "note": "S"
+    }
+  ]
+}
